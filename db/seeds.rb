@@ -16,3 +16,4 @@ ActiveRecord::Base.transaction do
     user = User.new({ username: 'test', password: 'password' })
     user.save!
 end
+

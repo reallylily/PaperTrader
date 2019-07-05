@@ -1,4 +1,5 @@
 import React from 'react';
+import NavContainer from '../nav/nav_container'
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
@@ -17,7 +18,6 @@ class Home extends React.Component {
     );
     const personalGreeting = () => (
       <hgroup className="header-group">
-        <i class="fas fa-user" className="fas fa-user"></i>
         <button className="header-button-logout" onClick={logout}>Log Out</button>
         <h2 className="header-name">{currentUser.username}</h2>
       </hgroup>
@@ -33,11 +33,11 @@ class Home extends React.Component {
       </header>
     )
   
-    // return currentUser ? personalGreeting() : sessionLinks();
-
     return (
       <div>
+        {/* <NavContainer/> */}
         {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() }
+
       </div>
     )
   } // render
