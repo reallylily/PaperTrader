@@ -94,8 +94,44 @@ header {
 
 .signup:hover {
     text-decoration: underline;
-    // transition: box-shadow 300ms;
-    // border: 1px solid;
-    // padding: 10px;
+    box-shadow: 5px 10px;
+}
+
+.header-group {
+
+}
+
+.header-name {
+    margin-top: 24px;
+    margin-right: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #040d14;
+    float: right;
+}
+
+.header-button-logout {
+    margin-top: 12px;
+    margin-right: 10%;
+    color: #21ce99;
+    align-items: center;
+    border-radius: 36px;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 17px;
+    font-weight: 600;
+    height: 48px;
+    box-pack: center;
+    justify-content: center;
+    line-height: 17px;
+    padding: 0 24px;
+    background: #21ce99;
+    border: 0;
+    color: #fff;
+    float: right;
+}
+
+.header-button-logout:hover {
+    text-decoration: underline;
     box-shadow: 5px 10px;
 }

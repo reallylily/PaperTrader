@@ -17,8 +17,9 @@ class Home extends React.Component {
     );
     const personalGreeting = () => (
       <hgroup className="header-group">
-        <h2 className="header-name">Hi, {currentUser.username}!</h2>
-        <button className="header-button" onClick={logout}>Log Out</button>
+        <i class="fas fa-user" className="fas fa-user"></i>
+        <button className="header-button-logout" onClick={logout}>Log Out</button>
+        <h2 className="header-name">{currentUser.username}</h2>
       </hgroup>
     );
     const nav = () => (
@@ -36,8 +37,7 @@ class Home extends React.Component {
 
     return (
       <div>
-        {this.props.match.path === '/' ? nav() : null }
-        {console.log(this.props.match.path)}
+        {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() }
       </div>
     )
   } // render

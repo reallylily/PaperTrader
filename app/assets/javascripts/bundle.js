@@ -297,12 +297,15 @@ function (_React$Component) {
       var personalGreeting = function personalGreeting() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
           className: "header-group"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-          className: "header-name"
-        }, "Hi, ", currentUser.username, "!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "header-button",
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          "class": "fas fa-user",
+          className: "fas fa-user"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "header-button-logout",
           onClick: logout
-        }, "Log Out"));
+        }, "Log Out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+          className: "header-name"
+        }, currentUser.username));
       };
 
       var nav = function nav() {
@@ -318,7 +321,7 @@ function (_React$Component) {
       }; // return currentUser ? personalGreeting() : sessionLinks();
 
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.path === '/' ? nav() : null, console.log(this.props.match.path));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav());
     } // render
 
   }]);
