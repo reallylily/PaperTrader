@@ -38,14 +38,19 @@ class SessionForm extends React.Component {
   render() {
     return (
       <div className="login-form-container">
+        <img className="session-background" src={window.images.session_background}/>
         <form onSubmit={this.handleSubmit} className="login-form-box">
-          Welcome to Paper Trader!
+          Welcome to Paper Trader
           <br/>
-          Please {this.props.formType} or {this.props.navLink}
+          {/* Please {this.props.formType} or {this.props.navLink} */}
           {this.renderErrors()}
           <div className="login-form">
+             {console.log(this.props.match.path)}
+
             <br/>
-            <label>Username:
+            <label className="login-label">Username
+              <br/>
+              <br/>
               <input type="text"
                 value={this.state.username}
                 onChange={this.update('username')}
@@ -53,7 +58,9 @@ class SessionForm extends React.Component {
               />
             </label>
             <br/>
-            <label>Password:
+            <label className="login-label">Password
+              <br/>
+              <br/>
               <input type="password"
                 value={this.state.password}
                 onChange={this.update('password')}
