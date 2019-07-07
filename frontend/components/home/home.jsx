@@ -1,5 +1,6 @@
 import React from 'react';
 import NavContainer from '../nav/nav_container'
+import StockIndexContainer from '../stocks/stock_index_container'
 import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
@@ -24,20 +25,20 @@ class Home extends React.Component {
     );
     const nav = () => (
       <header>
-      <Link to="/" className="header-link">
-        {/* <img className="header-image" src={window.images.moneybags}/> */}
-        <img className="header-image" src={window.images.logo}/>
-        <h1 className="header-text">papertrader</h1>
-      </Link>
-      { currentUser ? personalGreeting() : sessionLinks() }
+        <Link to="/" className="header-link">
+          {/* <img className="header-image" src={window.images.moneybags}/> */}
+          <img className="header-image" src={window.images.logo}/>
+          <h1 className="header-text">papertrader</h1>
+        </Link>
+        { currentUser ? personalGreeting() : sessionLinks() }
       </header>
     )
   
     return (
       <div>
-        {/* <NavContainer/> */}
+        {/* <NavContainer currentUser={currentUser} logout={logout}/> */}
         {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() }
-
+        <StockIndexContainer />
       </div>
     )
   } // render

@@ -16,6 +16,6 @@ class Api::StocksController < ApplicationController
     private
 
     def stock_params
-        params.require(:stock).permit(:symbol, :exchange, :name, :type, :iexId, :region, :currency)
+        params.require(:stock).permit(:symbol, :exchange, :name, :iexId, :region, :currency)
     end
 end
