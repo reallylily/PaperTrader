@@ -17,7 +17,7 @@ class Nav extends React.Component {
     );
     const personalGreeting = () => (
       <hgroup className="header-group">
-        <i class="fas fa-user" className="fas fa-user"></i>
+        {/* <i class="fas fa-user" className="fas fa-user"></i> */}
         <button className="header-button-logout" onClick={logout}>Log Out</button>
         <h2 className="header-name">{currentUser.username}</h2>
       </hgroup>
@@ -36,6 +36,7 @@ class Nav extends React.Component {
     return (
       <div>
           {console.log(this)}
+          {nav()}
         {/* {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() } */}
       </div>
     )

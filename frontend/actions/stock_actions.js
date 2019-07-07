@@ -17,8 +17,8 @@ export const requestAllStocks = () => dispatch => (
     APIUtil.fetchAllStocks().then(all_stocks => dispatch(receiveAllStocks(all_stocks)))
 );
 
-export const requestStock = (stock) => dispatch => (
-    APIUtil.fetchStock(stock).then(stock => dispatch(receiveStock(stock)))
+export const requestStock = (symbol) => dispatch => (
+    APIUtil.fetchStock(symbol).then(stock => dispatch(receiveStock(stock)))
 );
 
 // export const createStock = stock => dispatch => (

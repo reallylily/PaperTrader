@@ -221,9 +221,9 @@ var requestAllStocks = function requestAllStocks() {
     });
   };
 };
-var requestStock = function requestStock(stock) {
+var requestStock = function requestStock(symbol) {
   return function (dispatch) {
-    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](stock).then(function (stock) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](symbol).then(function (stock) {
       return dispatch(receiveStock(stock));
     });
   };
@@ -249,23 +249,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.jsx");
 /* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./session_form/login_form_container */ "./frontend/components/session_form/login_form_container.jsx");
 /* harmony import */ var _home_home_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./home/home_container */ "./frontend/components/home/home_container.js");
-/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
+/* harmony import */ var _stocks_stock_show_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stocks/stock_show_container */ "./frontend/components/stocks/stock_show_container.js");
+/* harmony import */ var _util_route_util__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../util/route_util */ "./frontend/util/route_util.jsx");
 
 
  // import GreetingContainer from './greeting/home';
 
 
 
- // import StockIndexContainer from './stocks/stock_index_container'
+
 
  // {/* <img src={window.images.logo} /> */}
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_6__["AuthRoute"], {
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_7__["AuthRoute"], {
     exact: true,
     path: "/signup",
     component: _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -273,8 +274,10 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _home_home_container__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-    to: "/"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    exact: true,
+    path: "/stocks/:symbol",
+    component: _stocks_stock_show_container__WEBPACK_IMPORTED_MODULE_6__["default"]
   })));
 };
 
@@ -335,46 +338,36 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
-          logout = _this$props.logout;
+          logout = _this$props.logout; // const sessionLinks = () => (
+      //   <nav className="login-signup">
+      //     <nav className="signup">
+      //       <Link to="/signup">Sign up</Link>
+      //     </nav>
+      //     <nav className="login">
+      //       <Link to="/login">Log In</Link>
+      //     </nav>
+      //   </nav>
+      // );
+      // const personalGreeting = () => (
+      //   <hgroup className="header-group">
+      //     <button className="header-button-logout" onClick={logout}>Log Out</button>
+      //     <h2 className="header-name">{currentUser.username}</h2>
+      //   </hgroup>
+      // );
+      // const nav = () => (
+      //   <header>
+      //     <Link to="/" className="header-link">
+      //       {/* <img className="header-image" src={window.images.moneybags}/> */}
+      //       <img className="header-image" src={window.images.logo}/>
+      //       <h1 className="header-text">papertrader</h1>
+      //     </Link>
+      //     { currentUser ? personalGreeting() : sessionLinks() }
+      //   </header>
+      // )
 
-      var sessionLinks = function sessionLinks() {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-          className: "login-signup"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-          className: "signup"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-          to: "/signup"
-        }, "Sign up")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
-          className: "login"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-          to: "/login"
-        }, "Log In")));
-      };
-
-      var personalGreeting = function personalGreeting() {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
-          className: "header-group"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "header-button-logout",
-          onClick: logout
-        }, "Log Out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-          className: "header-name"
-        }, currentUser.username));
-      };
-
-      var nav = function nav() {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
-          to: "/",
-          className: "header-link"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-          className: "header-image",
-          src: window.images.logo
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-          className: "header-text"
-        }, "papertrader")), currentUser ? personalGreeting() : sessionLinks());
-      };
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stocks_stock_index_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        currentUser: currentUser
+      }), console.log(this), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stocks_stock_index_container__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     } // render
 
   }]);
@@ -492,10 +485,7 @@ function (_React$Component) {
       var personalGreeting = function personalGreeting() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hgroup", {
           className: "header-group"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          "class": "fas fa-user",
-          className: "fas fa-user"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "header-button-logout",
           onClick: logout
         }, "Log Out"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
@@ -515,7 +505,7 @@ function (_React$Component) {
         }, "papertrader")), currentUser ? personalGreeting() : sessionLinks());
       };
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this), nav());
     } // render
 
   }]);
@@ -815,6 +805,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _stock_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stock_index_item */ "./frontend/components/stocks/stock_index_item.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -836,6 +827,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var StockIndex =
 /*#__PURE__*/
 function (_React$Component) {
@@ -852,13 +844,21 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       // const { currentUser } = this.props;
+      // console.log(this.props.entities)
       // if (Object.keys(this.props.stocks).length ===0 ) {
-      this.props.requestAllStocks(); // }
+      this.props.requestAllStocks(); // console.log(this.props.entities)
+      // }
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this.props.stocks));
+      var stock = Object.values(this.props.stocks).map(function (stock) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          stock: stock,
+          key: stock.symbol
+        });
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, stock), console.log(this));
     }
   }]);
 
@@ -899,14 +899,165 @@ var mdp = function mdp(dispatch) {
   return {
     requestAllStocks: function requestAllStocks() {
       return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["requestAllStocks"])());
-    },
-    requestStock: function requestStock(stock) {
-      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["requestStock"])(stock));
-    }
+    } // requestStock: stock => dispatch(requestStock(stock))
+
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_stock_index__WEBPACK_IMPORTED_MODULE_2__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/stocks/stock_index_item.jsx":
+/*!*********************************************************!*\
+  !*** ./frontend/components/stocks/stock_index_item.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+
+
+var StockIndexItem = function StockIndexItem(_ref) {
+  var stock = _ref.stock;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+    to: "/stocks/".concat(stock.symbol)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "stock-index-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, stock.symbol))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (StockIndexItem);
+
+/***/ }),
+
+/***/ "./frontend/components/stocks/stock_show.jsx":
+/*!***************************************************!*\
+  !*** ./frontend/components/stocks/stock_show.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nav_nav_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../nav/nav_container */ "./frontend/components/nav/nav_container.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var StockShow =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(StockShow, _React$Component);
+
+  function StockShow() {
+    _classCallCheck(this, StockShow);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(StockShow).apply(this, arguments));
+  }
+
+  _createClass(StockShow, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var symbol = this.props.match.params.symbol; //   console.log(this.props.requestStock(symbol))
+      //   if (!this.props.stock) {
+
+      this.props.requestStock(symbol); //   }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.match.params.symbol !== prevProps.match.params.symbol) {
+        var symbol = this.props.match.params.symbol;
+        this.props.requestStock(symbol);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          stock = _this$props.stock,
+          currentUser = _this$props.currentUser,
+          logout = _this$props.logout,
+          createTrade = _this$props.createTrade,
+          errors = _this$props.errors;
+      var close = Object.values(this.props.stock).map(function (stock) {
+        return stock.close;
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "show-price-close"
+      }, close), console.log(this.props.stock));
+    }
+  }]);
+
+  return StockShow;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (StockShow);
+
+/***/ }),
+
+/***/ "./frontend/components/stocks/stock_show_container.js":
+/*!************************************************************!*\
+  !*** ./frontend/components/stocks/stock_show_container.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _stock_show__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stock_show */ "./frontend/components/stocks/stock_show.jsx");
+
+
+
+
+var msp = function msp(state) {
+  // let stock = state.entities.stock
+  // let stock = {};
+  // Object.values(state.entities.stock).forEach((stock)=>{
+  //     stock[stock.symbol] = stock;
+  // })
+  return {
+    stock: state.entities.stock
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    // requestAllStocks: () => dispatch(requestAllStocks()),
+    requestStock: function requestStock(symbol) {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["requestStock"])(symbol));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_stock_show__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -971,12 +1122,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/users_reducer.js");
 /* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/stocks_reducer.js");
+/* harmony import */ var _stock_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stock_reducer */ "./frontend/reducers/stock_reducer.js");
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  all_stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  all_stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  stock: _stock_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 }));
 
 /***/ }),
@@ -1138,6 +1292,45 @@ var sessionReducer = function sessionReducer() {
 
 /***/ }),
 
+/***/ "./frontend/reducers/stock_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/stock_reducer.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var stockReducer = function stockReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state);
+
+  switch (action.type) {
+    //   case FETCH_ALL_STOCKS:
+    //     return  merge({}, newState, action.all_stocks);
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
+      // debugger
+      // newState[action.stock] = action.stock;
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, newState, action.stock);
+    // return newState
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (stockReducer);
+
+/***/ }),
+
 /***/ "./frontend/reducers/stocks_reducer.js":
 /*!*********************************************!*\
   !*** ./frontend/reducers/stocks_reducer.js ***!
@@ -1162,11 +1355,10 @@ var stocksReducer = function stocksReducer() {
   switch (action.type) {
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["FETCH_ALL_STOCKS"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, newState, action.all_stocks);
-
-    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
-      // debugger
-      newState[action.stock.id] = action.stock;
-      return newState;
+    // case RECEIVE_STOCK:
+    //     // debugger
+    //     newState[action.stock.symbol] = action.stock;
+    //     return newState
 
     default:
       return state;
@@ -1381,7 +1573,7 @@ var fetchAllStocks = function fetchAllStocks() {
 var fetchStock = function fetchStock(symbol) {
   return $.ajax({
     method: "GET",
-    url: "api/stocks/".concat(symbol)
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/1m/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac")
   });
 };
 var createStock = function createStock(stock) {

@@ -11,10 +11,10 @@ import merge from 'lodash/merge'
     switch(action.type) {
       case FETCH_ALL_STOCKS:
         return  merge({}, newState, action.all_stocks);
-    case RECEIVE_STOCK:
-        // debugger
-        newState[action.stock.id] = action.stock;
-        return newState
+    // case RECEIVE_STOCK:
+    //     // debugger
+    //     newState[action.stock.symbol] = action.stock;
+    //     return newState
       default:
         return state;
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import StockIndexItem from './stock_index_item'
 
 class StockIndex extends React.Component {
     constructor(props) {
@@ -10,17 +11,27 @@ class StockIndex extends React.Component {
 
     componentDidMount(){
         // const { currentUser } = this.props;
-        
+            // console.log(this.props.entities)
         
         // if (Object.keys(this.props.stocks).length ===0 ) {
-            this.props.requestAllStocks()
+        this.props.requestAllStocks()
+            // console.log(this.props.entities)
+
         // }
     }
     
     render() {
+        const stock = Object.values(this.props.stocks).map(stock =>{
+            return (
+                <StockIndexItem stock={stock} key={stock.symbol}/>
+            )
+        })
         return (
             <div>
-                {console.log(this.props.stocks)}
+                <ul>
+                    {stock}
+                </ul>
+                {console.log(this)}
             </div>
         );
     }

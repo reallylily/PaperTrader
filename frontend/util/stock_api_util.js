@@ -11,7 +11,7 @@ export const fetchAllStocks = () => (
 export const fetchStock = symbol => (
     $.ajax({
         method: "GET",
-        url: `api/stocks/${symbol}`
+        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1m/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
     })
 )
 
