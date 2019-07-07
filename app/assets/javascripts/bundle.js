@@ -852,14 +852,13 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       // const { currentUser } = this.props;
-      // console.log(this)
-      this.props.requestAllStocks().then(function (stock) {// this.props.stocks[stock.symbol] = stock
-      });
+      // if (Object.keys(this.props.stocks).length ===0 ) {
+      this.props.requestAllStocks(); // }
     }
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this.props.stocks));
     }
   }]);
 
@@ -887,8 +886,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var msp = function msp(state) {
+  var stocks = {};
+  Object.values(state.entities.all_stocks).forEach(function (stock) {
+    stocks[stock.symbol] = stock;
+  });
   return {
-    all_stocks: state.all_stocks
+    stocks: stocks
   };
 };
 

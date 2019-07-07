@@ -12,17 +12,15 @@ class StockIndex extends React.Component {
         // const { currentUser } = this.props;
         
         
-        // console.log(this)
-        
-        this.props.requestAllStocks().then(stock => {
-            // this.props.stocks[stock.symbol] = stock
-        })
+        // if (Object.keys(this.props.stocks).length ===0 ) {
+            this.props.requestAllStocks()
+        // }
     }
     
     render() {
         return (
             <div>
-                {console.log(this)}
+                {console.log(this.props.stocks)}
             </div>
         );
     }
