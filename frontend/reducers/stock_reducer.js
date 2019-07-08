@@ -14,7 +14,7 @@ import merge from 'lodash/merge'
     case RECEIVE_STOCK:
         // debugger
         // newState[action.stock] = action.stock;
-        return  merge({}, newState, action.stock);
+        return  merge({}, action.stock);
 
         // return newState
       default:
