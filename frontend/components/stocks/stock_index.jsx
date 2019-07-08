@@ -9,22 +9,17 @@ class StockIndex extends React.Component {
         // this.index = {}
     }
 
-    componentDidMount(){
-        // const { currentUser } = this.props;
-            // console.log(this.props.entities)
-        
-        // if (Object.keys(this.props.stocks).length ===0 ) {
-        this.props.requestAllStocks()
-            // console.log(this.props.entities)
-
-        // }
-    }
+    // componentDidMount(){
+    //     if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
+    // }
     
     render() {
         const stock = Object.values(this.props.stocks).map(stock =>{
             return (
                 <StockIndexItem stock={stock} key={stock.symbol}/>
             )
+
+            
         })
         return (
             <div>

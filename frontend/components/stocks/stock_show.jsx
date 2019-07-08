@@ -39,6 +39,8 @@ class StockShow extends React.Component {
       return (
         <div>
             <NavContainer/>
+            {/* <h1>{console.log(this.props.stocks[symbol)]}</h1>
+            <h2>{symbol}</h2> */}
             <LineChart className='chart'
                 width={676}
                 height={196}

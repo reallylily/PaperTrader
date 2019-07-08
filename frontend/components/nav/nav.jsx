@@ -3,6 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Nav extends React.Component {
+
+  componentDidMount(){
+    // debugger
+    if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
+  }
+
   render() {
     const { currentUser, logout } = this.props;
     const sessionLinks = () => (
@@ -35,9 +41,9 @@ class Nav extends React.Component {
   
     return (
       <div>
-          {console.log(this)}
+          {/* {console.log(this)} */}
           {nav()}
-        {/* {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() } */}
+          {/* {this.props.match.path === '/login' || this.props.match.path === '/signup' ? null : nav() } */}
       </div>
     )
   } // render

@@ -17,7 +17,11 @@ const msp = (state) => {
     // Object.values(state.entities.stock).forEach((stock)=>{
     //     stock[stock.symbol] = stock;
     // })
-    return ({stock: state.entities.stock})
+    let stocks = {};
+    Object.values(state.entities.all_stocks).forEach((stock)=>{
+        stocks[stock.symbol] = stock;
+    })
+    return ({stock: state.entities.stock, stocks: stocks})
 }
 
 const mdp = dispatch => ({

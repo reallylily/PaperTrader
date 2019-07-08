@@ -509,6 +509,12 @@ function (_React$Component) {
   }
 
   _createClass(Nav, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // debugger
+      if (Object.values(this.props.stocks).length === 0) this.props.requestAllStocks();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -552,7 +558,7 @@ function (_React$Component) {
         }, "papertrader")), currentUser ? personalGreeting() : sessionLinks());
       };
 
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, console.log(this), nav());
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, nav());
     } // render
 
   }]);
@@ -576,28 +582,37 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nav */ "./frontend/components/nav/nav.jsx");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _nav__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./nav */ "./frontend/components/nav/nav.jsx");
 
 
 
+ // const mapStateToProps = ({ session, entities: { users } }) => {
 
-var mapStateToProps = function mapStateToProps(_ref) {
-  var session = _ref.session,
-      users = _ref.entities.users;
+var mapStateToProps = function mapStateToProps(state) {
+  var stocks = {};
+  debugger;
+  Object.values(state.entities.all_stocks).forEach(function (stock) {
+    stocks[stock.symbol] = stock;
+  });
   return {
-    currentUser: users[session.id]
+    stocks: stocks,
+    currentUser: state.entities.users[state.session.id]
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
+    requestAllStocks: function requestAllStocks() {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__["requestAllStocks"])());
+    },
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_nav__WEBPACK_IMPORTED_MODULE_2__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_nav__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -885,18 +900,12 @@ function (_React$Component) {
 
     return _possibleConstructorReturn(this, _getPrototypeOf(StockIndex).call(this, props)); // if (this.index === undefined) this.index = {}
     // this.index = {}
-  }
+  } // componentDidMount(){
+  //     if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
+  // }
+
 
   _createClass(StockIndex, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // const { currentUser } = this.props;
-      // console.log(this.props.entities)
-      // if (Object.keys(this.props.stocks).length ===0 ) {
-      this.props.requestAllStocks(); // console.log(this.props.entities)
-      // }
-    }
-  }, {
     key: "render",
     value: function render() {
       var stock = Object.values(this.props.stocks).map(function (stock) {
@@ -1159,8 +1168,13 @@ var msp = function msp(state) {
   // Object.values(state.entities.stock).forEach((stock)=>{
   //     stock[stock.symbol] = stock;
   // })
+  var stocks = {};
+  Object.values(state.entities.all_stocks).forEach(function (stock) {
+    stocks[stock.symbol] = stock;
+  });
   return {
-    stock: state.entities.stock
+    stock: state.entities.stock,
+    stocks: stocks
   };
 };
 
