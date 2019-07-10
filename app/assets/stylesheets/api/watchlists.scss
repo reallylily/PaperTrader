@@ -14,3 +14,17 @@
     display: flex;
     justify-content:flex-start;
 }
+
+.watchlist-index-item {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+}
+
+.watchlist-index-item > p {
+    padding: 10px 10px 10px;
+}
+
+// .watchlist-index-box > .watchlist-index-item-price {
+//     display:flex;
+//     justify-self: flex-end;
+// }

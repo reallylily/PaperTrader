@@ -1214,7 +1214,8 @@ function (_React$Component) {
     value: function componentDidMount() {
       var symbol = this.props.match.params.symbol;
       this.props.requestStock1d(symbol);
-      this.props.requestCompany(symbol);
+      this.props.requestCompany(symbol); // console.log(this.props)
+
       this.setState({
         watched: Boolean(this.props.watchlists[symbol])
       }); // this.stockInWatchlist = !!this.props.watchlists[symbol]
@@ -1234,11 +1235,16 @@ function (_React$Component) {
     value: function addToWatchlist(e) {
       var _this2 = this;
 
-      e.preventDefault(); // console.log(this.props.currentUser.id)
-
+      e.preventDefault();
       this.props.createWatchlist(this.props.watchlist).then(function () {
-        _this2.props.fetchUser(_this2.props.currentUser.id);
-      }); // this.setState({ watched: true })
+        _this2.props.fetchUser(_this2.props.currentUser.id).then(function () {
+          var symbol = _this2.props.watchlist.symbol;
+
+          _this2.setState({
+            watched: Boolean(_this2.props.watchlists[symbol])
+          });
+        });
+      });
     }
   }, {
     key: "removeFromWatchlist",
@@ -1246,18 +1252,23 @@ function (_React$Component) {
       var _this3 = this;
 
       e.preventDefault();
+      var symbol = this.props.watchlist.symbol;
       this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id).then(function () {
-        _this3.props.fetchUser(_this3.props.currentUser.id); // this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id)
+        _this3.props.fetchUser(_this3.props.currentUser.id).then(function () {
+          var symbol = _this3.props.watchlist.symbol;
 
+          _this3.setState({
+            watched: Boolean(_this3.props.watchlists[symbol])
+          });
+        });
       });
-      var symbol = this.props.watchlist.symbol; // console.log(symbol)
-      // this.setState({ watched: false })
     }
   }, {
     key: "render",
     value: function render() {
       var _this4 = this;
 
+      console.log(this.state.watched);
       var symbol = this.props.match.params.symbol;
       var stock_array = Object.values(this.props.stock);
       stock_array.forEach(function (stock, idx) {
@@ -1395,7 +1406,8 @@ var msp = function msp(state, ownProps) {
   var stocks = {};
   Object.values(state.entities.all_stocks).forEach(function (stock) {
     stocks[stock.symbol] = stock;
-  }); // let watchlists = {};
+  }); // debugger
+  // let watchlists = {};
   // state.session.watchlists.forEach(watchlist =>{
   //     watchlists[watchlist.symbol] = watchlist
   // })
@@ -1471,12 +1483,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var WatchlistIndexItem = function WatchlistIndexItem(_ref) {
-  var watchlist = _ref.watchlist;
+  var watchlist = _ref.watchlist,
+      watching = _ref.watching;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: "/stocks/".concat(watchlist.symbol)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "watchlist-index-item"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, watchlist.symbol))));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, watchlist.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "watchlist-index-item-price"
+  }, "$", watching ? watching.quote.latestPrice : null))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (WatchlistIndexItem);
@@ -1535,7 +1550,7 @@ function (_React$Component) {
   _createClass(WatchlistShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var symbols = this.props.currentUser.watchlists.map(function (watchlist) {
+      var symbols = Object.values(this.props.watchlists).map(function (watchlist) {
         return watchlist.symbol;
       }).join(',');
       this.props.requestWatching1d(symbols);
@@ -1549,12 +1564,13 @@ function (_React$Component) {
       var symbolsIDX = Object.values(this.props.currentUser.watchlists).map(function (watchlist) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_index_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
           watchlist: watchlist,
-          key: watchlist.symbol
+          key: watchlist.symbol,
+          watching: _this.props.watching[watchlist.symbol]
         });
       }); // For Watchlist Chart
 
       var data = [];
-      var symbols = this.props.currentUser.watchlists.map(function (watchlist) {
+      var symbols = Object.values(this.props.watchlists).map(function (watchlist) {
         return watchlist.symbol;
       }).join(',');
       Object.values(this.props.watching).forEach(function (watch) {
@@ -1694,8 +1710,9 @@ var msp = function msp(state, ownProps) {
     // stocks: stocks, 
     // company: state.entities.company,
     currentUser: state.session,
-    watching: state.entities.watching // watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
-    // watchlists: watchlists,
+    watching: state.entities.watching,
+    // watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
+    watchlists: state.session.watchlists // watchlists: watchlists,
 
   };
 };
@@ -1758,6 +1775,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var store;
 
   if (window.currentUser) {
+    var newWatchlists = {};
+    window.currentUser.watchlists.forEach(function (watchlist) {
+      newWatchlists[watchlist.symbol] = watchlist;
+    });
+    window.currentUser.watchlists = newWatchlists;
     var preloadedState = {
       session: window.currentUser,
       entities: {// users: { [window.currentUser.id]: window.currentUser }
@@ -1990,7 +2012,8 @@ var sessionReducer = function sessionReducer() {
       action.currentUser.watchlists.forEach(function (watchlist) {
         newWatchlists[watchlist.symbol] = watchlist;
       });
-      action.currentUser.watchlists = newWatchlists;
+      action.currentUser.watchlists = newWatchlists; // debugger
+
       return action.currentUser;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:

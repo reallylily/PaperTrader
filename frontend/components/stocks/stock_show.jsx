@@ -18,6 +18,7 @@ class StockShow extends React.Component {
     const symbol = this.props.match.params.symbol;
     this.props.requestStock1d(symbol);
     this.props.requestCompany(symbol);
+    // console.log(this.props)
     this.setState({watched: Boolean(this.props.watchlists[symbol])})
     // this.stockInWatchlist = !!this.props.watchlists[symbol]
   }
@@ -33,28 +34,27 @@ class StockShow extends React.Component {
   
   addToWatchlist(e){
     e.preventDefault();
-    // console.log(this.props.currentUser.id)
-    
     this.props.createWatchlist(this.props.watchlist).then(()=>{
-      this.props.fetchUser(this.props.currentUser.id)
+      this.props.fetchUser(this.props.currentUser.id).then(()=>{
+        let symbol = this.props.watchlist.symbol
+        this.setState({ watched: Boolean(this.props.watchlists[symbol]) })
+      })
     })
-    // this.setState({ watched: true })
   }
 
   removeFromWatchlist(e){
     e.preventDefault();
-
-    this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id).then(()=>{
-      this.props.fetchUser(this.props.currentUser.id)
-      // this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id)
-    })
-
     let symbol = this.props.watchlist.symbol
-    // console.log(symbol)
-    // this.setState({ watched: false })
+    this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id).then(()=>{
+      this.props.fetchUser(this.props.currentUser.id).then(()=>{
+        let symbol = this.props.watchlist.symbol
+        this.setState({ watched: Boolean(this.props.watchlists[symbol]) })
+      })
+    })
   }
 
   render() {
+    console.log(this.state.watched)
     const symbol = this.props.match.params.symbol
     let stock_array = Object.values(this.props.stock)
     stock_array.forEach((stock, idx)=>{ 

@@ -17,6 +17,7 @@ const sessionReducer = (state = _nullUser, action) => {
         newWatchlists[watchlist.symbol] = watchlist;
       })
       action.currentUser.watchlists = newWatchlists;
+      // debugger
       return action.currentUser
     case LOGOUT_CURRENT_USER:
       return _nullUser;

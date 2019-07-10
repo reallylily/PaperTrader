@@ -9,6 +9,11 @@ import configureStore from './store/store';
 document.addEventListener('DOMContentLoaded', () => {
   let store;
   if (window.currentUser) {
+      let newWatchlists = {}
+      window.currentUser.watchlists.forEach(watchlist=>{
+        newWatchlists[watchlist.symbol] = watchlist;
+      })
+      window.currentUser.watchlists = newWatchlists;
     const preloadedState = {
       session:  window.currentUser ,
       entities: {

@@ -7,18 +7,18 @@ import WatchlistIndexItem from './watchlist_index_item'
 
 class WatchlistShow extends React.Component {
   componentDidMount() {
-    const symbols = this.props.currentUser.watchlists.map(watchlist => (watchlist.symbol)).join(',')
+    const symbols = Object.values(this.props.watchlists).map(watchlist => (watchlist.symbol)).join(',')
     this.props.requestWatching1d(symbols);
   }
   
   render () {
     // For Watchlist Index
     const symbolsIDX = Object.values(this.props.currentUser.watchlists).map(watchlist=>(
-      <WatchlistIndexItem watchlist={watchlist} key={watchlist.symbol}/>
+      <WatchlistIndexItem watchlist={watchlist} key={watchlist.symbol} watching={this.props.watching[watchlist.symbol]}/>
     ))
     // For Watchlist Chart
     let data = []
-    const symbols = this.props.currentUser.watchlists.map(watchlist => (watchlist.symbol)).join(',')
+    const symbols = Object.values(this.props.watchlists).map(watchlist => (watchlist.symbol)).join(',')
 
     Object.values(this.props.watching).forEach(watch =>{
       // console.log(watch.chart)

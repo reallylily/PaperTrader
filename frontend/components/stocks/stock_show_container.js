@@ -20,6 +20,7 @@ const msp = (state, ownProps) => {
     Object.values(state.entities.all_stocks).forEach((stock)=>{
         stocks[stock.symbol] = stock;
     })
+    // debugger
     // let watchlists = {};
     // state.session.watchlists.forEach(watchlist =>{
     //     watchlists[watchlist.symbol] = watchlist
