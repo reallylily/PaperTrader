@@ -11,7 +11,7 @@ class Home extends React.Component {
   
     return (
       <div>
-        <NavContainer currentUser={currentUser} />
+        <NavContainer />
         <WatchlistShowContainer />
       </div>
     )

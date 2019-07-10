@@ -24,6 +24,6 @@ export const logout = () => (
 export const fetchUser = id => (
   $.ajax({
     method: 'GET',
-    url: `/api/user/${id}`
+    url: `/api/users/${id}`
   })
 );

@@ -20,10 +20,10 @@ const msp = (state, ownProps) => {
     Object.values(state.entities.all_stocks).forEach((stock)=>{
         stocks[stock.symbol] = stock;
     })
-    let watchlists = {};
-    state.session.watchlists.forEach(watchlist =>{
-        watchlists[watchlist.symbol] = watchlist
-    })
+    // let watchlists = {};
+    // state.session.watchlists.forEach(watchlist =>{
+    //     watchlists[watchlist.symbol] = watchlist
+    // })
     // console.log(state)
     return ({
         stock: state.entities.stock, 
@@ -32,7 +32,7 @@ const msp = (state, ownProps) => {
         currentUser: state.session,
         watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
         
-        watchlists: watchlists,
+        watchlists: state.session.watchlists,
     })
 }
 

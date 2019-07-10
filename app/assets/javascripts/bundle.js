@@ -583,9 +583,7 @@ function (_React$Component) {
       var _this$props = this.props,
           currentUser = _this$props.currentUser,
           logout = _this$props.logout;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
-        currentUser: currentUser
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_show_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_show_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     } // render
 
   }]);
@@ -617,8 +615,7 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(_ref) {
   var session = _ref.session,
       users = _ref.entities.users;
-  return {
-    currentUser: users[session.id]
+  return {// currentUser: session
   };
 };
 
@@ -1235,30 +1232,31 @@ function (_React$Component) {
   }, {
     key: "addToWatchlist",
     value: function addToWatchlist(e) {
-      e.preventDefault();
-      this.props.fetchUser(this.props.currentUser.id);
-      this.props.createWatchlist(this.props.watchlist);
-      this.setState({
-        watched: true
-      });
+      var _this2 = this;
+
+      e.preventDefault(); // console.log(this.props.currentUser.id)
+
+      this.props.createWatchlist(this.props.watchlist).then(function () {
+        _this2.props.fetchUser(_this2.props.currentUser.id);
+      }); // this.setState({ watched: true })
     }
   }, {
     key: "removeFromWatchlist",
     value: function removeFromWatchlist(e) {
-      e.preventDefault();
-      this.props.fetchUser(this.props.currentUser.id);
-      var symbol = this.props.watchlist.symbol; // console.log(symbol)
+      var _this3 = this;
 
-      this.props.fetchUser();
-      this.props.deleteWatchlist(this.props.watchlists[symbol].id);
-      this.setState({
-        watched: false
+      e.preventDefault();
+      this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id).then(function () {
+        _this3.props.fetchUser(_this3.props.currentUser.id); // this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id)
+
       });
+      var symbol = this.props.watchlist.symbol; // console.log(symbol)
+      // this.setState({ watched: false })
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var symbol = this.props.match.params.symbol;
       var stock_array = Object.values(this.props.stock);
@@ -1283,13 +1281,13 @@ function (_React$Component) {
 
       var addToWatchlist = function addToWatchlist() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          onClick: _this2.addToWatchlist
+          onClick: _this4.addToWatchlist
         }, "Add to Watchlist");
       };
 
       var removeFromWatchlist = function removeFromWatchlist() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          onClick: _this2.removeFromWatchlist
+          onClick: _this4.removeFromWatchlist
         }, "Remove from Watchlist");
       };
 
@@ -1325,27 +1323,27 @@ function (_React$Component) {
         className: "button-time-period"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock1d(symbol);
+          return _this4.props.requestStock1d(symbol);
         }
       }, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock5d(symbol);
+          return _this4.props.requestStock5d(symbol);
         }
       }, "5D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock1m(symbol);
+          return _this4.props.requestStock1m(symbol);
         }
       }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock3m(symbol);
+          return _this4.props.requestStock3m(symbol);
         }
       }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock1y(symbol);
+          return _this4.props.requestStock1y(symbol);
         }
       }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock5y(symbol);
+          return _this4.props.requestStock5y(symbol);
         }
       }, "5Y")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "about-box"
@@ -1397,11 +1395,11 @@ var msp = function msp(state, ownProps) {
   var stocks = {};
   Object.values(state.entities.all_stocks).forEach(function (stock) {
     stocks[stock.symbol] = stock;
-  });
-  var watchlists = {};
-  state.session.watchlists.forEach(function (watchlist) {
-    watchlists[watchlist.symbol] = watchlist;
-  }); // console.log(state)
+  }); // let watchlists = {};
+  // state.session.watchlists.forEach(watchlist =>{
+  //     watchlists[watchlist.symbol] = watchlist
+  // })
+  // console.log(state)
 
   return {
     stock: state.entities.stock,
@@ -1412,7 +1410,7 @@ var msp = function msp(state, ownProps) {
       user_id: state.session.id,
       symbol: ownProps.match.params.symbol
     },
-    watchlists: watchlists
+    watchlists: state.session.watchlists
   };
 };
 
@@ -1988,6 +1986,11 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
+      var newWatchlists = {};
+      action.currentUser.watchlists.forEach(function (watchlist) {
+        newWatchlists[watchlist.symbol] = watchlist;
+      });
+      action.currentUser.watchlists = newWatchlists;
       return action.currentUser;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
@@ -2304,7 +2307,7 @@ var logout = function logout() {
 var fetchUser = function fetchUser(id) {
   return $.ajax({
     method: 'GET',
-    url: "/api/user/".concat(id)
+    url: "/api/users/".concat(id)
   });
 };
 

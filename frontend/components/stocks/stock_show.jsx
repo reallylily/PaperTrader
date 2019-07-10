@@ -33,23 +33,25 @@ class StockShow extends React.Component {
   
   addToWatchlist(e){
     e.preventDefault();
-
-    this.props.fetchUser(this.props.currentUser.id)
-
-    this.props.createWatchlist(this.props.watchlist);
-    this.setState({ watched: true })
+    // console.log(this.props.currentUser.id)
+    
+    this.props.createWatchlist(this.props.watchlist).then(()=>{
+      this.props.fetchUser(this.props.currentUser.id)
+    })
+    // this.setState({ watched: true })
   }
 
   removeFromWatchlist(e){
     e.preventDefault();
 
-    this.props.fetchUser(this.props.currentUser.id)
+    this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id).then(()=>{
+      this.props.fetchUser(this.props.currentUser.id)
+      // this.props.deleteWatchlist(this.props.currentUser.watchlists[symbol].id)
+    })
 
     let symbol = this.props.watchlist.symbol
     // console.log(symbol)
-    this.props.fetchUser()
-    this.props.deleteWatchlist(this.props.watchlists[symbol].id);
-    this.setState({ watched: false })
+    // this.setState({ watched: false })
   }
 
   render() {
