@@ -7,7 +7,6 @@ import Nav from './nav';
 // const mapStateToProps = ({ session, entities: { users } }) => {
 const mapStateToProps = (state) => {
   let stocks = {};
-  debugger
   Object.values(state.entities.all_stocks).forEach((stock)=>{
       stocks[stock.symbol] = stock;
   })

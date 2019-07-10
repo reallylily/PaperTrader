@@ -59,11 +59,30 @@ table {
 a {
   text-decoration: none;
   color: inherit;
+}
 
+button {
+  text-decoration: none;
+  border-style: none;
+  background-color: transparent;
+  color: inherit;
+}
+
+button:focus {
+  text-decoration: none;
+  border-style: none;
+  background-color: transparent;
+  color: inherit;
 }
 
 input {
   border-style: none;
+}
+
+input:focus {
+  text-decoration: none;
+  border-style: none;
+  color: inherit;
 }
 
 li {

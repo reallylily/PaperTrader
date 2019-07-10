@@ -1,0 +1,81 @@
+.company-name {
+    margin-top: 100px;
+    font-size: 36px;
+    font-weight: bold;
+
+}
+
+.button-time-period {
+    margin: 24px 0px 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid lightgray;
+}
+
+.button-time-period > button {
+    font-weight: bold;
+    cursor: pointer;
+    // font-weight: 500;
+    margin: 0 12px;
+    font-size: 13px;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+}
+
+.button-time-period > button:hover {
+    color: #21ce99;
+}
+
+.button-time-period > button:focus {
+    color: #21ce99;
+
+}
+
+.about-box {
+    padding: 0px 0px 60px;
+}
+
+.about {
+    font-size: 26px;
+    padding: 0px 0px 16px;
+    border-bottom: 1px solid lightgray;
+}
+
+.description {
+    margin: 0 0 24px;
+    max-width: 570px;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    box-sizing: inherit;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.details-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 18px 0 0;
+    font-size: 13px;
+    // font-weight: 400;
+    letter-spacing: 0.25px;
+    line-height: 19px;
+}
+
+.details-box > label {
+    justify-content: flex-start;
+
+    // font-size: 100px
+    font-weight: 600;
+
+}
+
+.details-box > label > p {
+    justify-content: flex-start;
+
+    font-weight: 400;
+}

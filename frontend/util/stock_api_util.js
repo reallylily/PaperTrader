@@ -3,57 +3,58 @@
 export const fetchAllStocks = () => (
     $.ajax({
         method: 'GET',
-        url: 'https://cloud.iexapis.com/stable/ref-data/symbols/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac'
+        url: 'https://sandbox.iexapis.com/stable/ref-data/symbols/?token=Tpk_9ae29b1583b348919535a4d19affb8dc'
     })
 );
+
 
 
 export const fetchStock = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/dynamic/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/dynamic/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock5y = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/5y/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/5y/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock1y = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1y/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/1y/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock3m = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/3m/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/3m/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock1m = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1mm/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/1mm/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock5d = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/5dm/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/5dm/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 
 export const fetchStock1d = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1d/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/1d/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 

@@ -5,13 +5,7 @@ import StockIndexItem from './stock_index_item'
 class StockIndex extends React.Component {
     constructor(props) {
         super(props)
-        // if (this.index === undefined) this.index = {}
-        // this.index = {}
     }
-
-    // componentDidMount(){
-    //     if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
-    // }
     
     render() {
         const stock = Object.values(this.props.stocks).map(stock =>{
@@ -26,7 +20,6 @@ class StockIndex extends React.Component {
                 <ul>
                     {stock}
                 </ul>
-                {console.log(this)}
             </div>
         );
     }

@@ -1,5 +1,4 @@
 import {
-    // FETCH_ALL_STOCKS,
     RECEIVE_STOCK
   } from '../actions/stock_actions';
 import merge from 'lodash/merge'
@@ -9,14 +8,8 @@ import merge from 'lodash/merge'
     let newState = merge({}, state);
 
     switch(action.type) {
-    //   case FETCH_ALL_STOCKS:
-    //     return  merge({}, newState, action.all_stocks);
     case RECEIVE_STOCK:
-        // debugger
-        // newState[action.stock] = action.stock;
         return  merge({}, action.stock);
-
-        // return newState
       default:
         return state;
     }

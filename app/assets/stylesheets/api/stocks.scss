@@ -2,9 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.chart {
-    margin-top: 150px;
+.stock-show-box {
     margin-left: 5%;
+    width: 676px
+}
+
+.chart {
     stroke: #21ce99;
     // color: #21ce99;
     // text-decoration: underline;

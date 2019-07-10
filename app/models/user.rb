@@ -13,6 +13,8 @@
 
 class User < ApplicationRecord
 
+  has_many :watchlists
+
   attr_reader :password
 
   validates :username, :password_digest, :session_token, :bank, presence: true
