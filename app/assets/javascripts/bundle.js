@@ -150,7 +150,7 @@ var updateFilter = function updateFilter(filter, value) {
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, signup, login, logout */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, receiveCurrentUser, logoutCurrentUser, receiveErrors, signup, login, logout, fetchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -164,6 +164,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -208,6 +209,15 @@ var logout = function logout() {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["logout"]().then(function (user) {
       return dispatch(logoutCurrentUser());
+    });
+  };
+};
+var fetchUser = function fetchUser(id) {
+  return function (dispatch) {
+    return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchUser"](id).then(function (user) {
+      return dispatch(receiveCurrentUser(user));
+    }, function (err) {
+      return dispatch(receiveErrors(err.responseJSON));
     });
   };
 };
@@ -311,6 +321,78 @@ var requestStock1d = function requestStock1d(symbol) {
 
 /***/ }),
 
+/***/ "./frontend/actions/watching_actions.js":
+/*!**********************************************!*\
+  !*** ./frontend/actions/watching_actions.js ***!
+  \**********************************************/
+/*! exports provided: RECEIVE_WATCHING, receiveWatching, requestWatching5y, requestWatching1y, requestWatching3m, requestWatching1m, requestWatching5d, requestWatching1d */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_WATCHING", function() { return RECEIVE_WATCHING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveWatching", function() { return receiveWatching; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching5y", function() { return requestWatching5y; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching1y", function() { return requestWatching1y; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching3m", function() { return requestWatching3m; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching1m", function() { return requestWatching1m; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching5d", function() { return requestWatching5d; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestWatching1d", function() { return requestWatching1d; });
+/* harmony import */ var _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/watching_api_util */ "./frontend/util/watching_api_util.js");
+
+var RECEIVE_WATCHING = 'RECEIVE_WATCHING';
+var receiveWatching = function receiveWatching(watching) {
+  return {
+    type: RECEIVE_WATCHING,
+    watching: watching
+  };
+}; // 5y 1y 3m 1m 5d 1d
+
+var requestWatching5y = function requestWatching5y(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching5y"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+var requestWatching1y = function requestWatching1y(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching1y"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+var requestWatching3m = function requestWatching3m(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching3m"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+var requestWatching1m = function requestWatching1m(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching1m"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+var requestWatching5d = function requestWatching5d(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching5d"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+var requestWatching1d = function requestWatching1d(symbol) {
+  return function (dispatch) {
+    return _util_watching_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatching1d"](symbol).then(function (symbol) {
+      return dispatch(receiveWatching(symbol));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/watchlist_actions.js":
 /*!***********************************************!*\
   !*** ./frontend/actions/watchlist_actions.js ***!
@@ -355,9 +437,9 @@ var removeWatchlist = function removeWatchlist(watchlistId) {
   };
 };
 
-var requestWatchlists = function requestWatchlists(symbols) {
+var requestWatchlists = function requestWatchlists() {
   return function (dispatch) {
-    return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatchlists"](symbols).then(function (watchlists) {
+    return _util_watchlist_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchWatchlists"]().then(function (watchlists) {
       return dispatch(receiveWatchlists(watchlists));
     });
   };
@@ -684,7 +766,7 @@ var mapStateToProps = function mapStateToProps(state) {
   });
   return {
     stocks: stocks,
-    currentUser: state.entities.users[state.session.id]
+    currentUser: state.session
   };
 };
 
@@ -1154,6 +1236,7 @@ function (_React$Component) {
     key: "addToWatchlist",
     value: function addToWatchlist(e) {
       e.preventDefault();
+      this.props.fetchUser(this.props.currentUser.id);
       this.props.createWatchlist(this.props.watchlist);
       this.setState({
         watched: true
@@ -1163,8 +1246,10 @@ function (_React$Component) {
     key: "removeFromWatchlist",
     value: function removeFromWatchlist(e) {
       e.preventDefault();
-      var symbol = this.props.watchlist.symbol;
-      console.log(symbol);
+      this.props.fetchUser(this.props.currentUser.id);
+      var symbol = this.props.watchlist.symbol; // console.log(symbol)
+
+      this.props.fetchUser();
       this.props.deleteWatchlist(this.props.watchlists[symbol].id);
       this.setState({
         watched: false
@@ -1176,21 +1261,23 @@ function (_React$Component) {
       var _this2 = this;
 
       var symbol = this.props.match.params.symbol;
-      var close = Object.values(this.props.stock).map(function (stock) {
+      var stock_array = Object.values(this.props.stock);
+      stock_array.forEach(function (stock, idx) {
+        if (!stock.close) stock.close = stock_array[idx - 1].close;
+        stock.datetime = stock.date + ' ' + (stock.minute || '');
+      });
+      var close = stock_array.map(function (stock) {
         return stock.close;
       });
       var min = -Infinity;
       var max = Infinity;
 
-      if (Object.values(this.props.stock).length >= 1) {
+      if (stock_array.length >= 1) {
         min = close.reduce(function (acc, el) {
           return Math.min(acc, el);
         });
         max = close.reduce(function (acc, el) {
           return Math.max(acc, el);
-        });
-        Object.values(this.props.stock).forEach(function (stock) {
-          stock.datetime = stock.date + ' ' + (stock.minute || '');
         });
       }
 
@@ -1208,13 +1295,13 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stock-show-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "company-name"
-      }, this.props.company.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["LineChart"], {
+      }, this.props.company.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["LineChart"], {
         className: "chart",
         width: 676,
         height: 196,
-        data: Object.values(this.props.stock),
+        data: stock_array,
         margin: {
           top: 5,
           right: 20,
@@ -1228,39 +1315,39 @@ function (_React$Component) {
         dataKey: "close",
         hide: true,
         domain: [min, max]
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Tooltip"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Line"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Line"], {
         type: "monotone",
         dataKey: "close",
         dot: false,
         stroke: "#21ce99",
         yAxisId: 0
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Tooltip"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "button-time-period"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock5y(symbol);
+          return _this2.props.requestStock1d(symbol);
         }
-      }, "5Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.props.requestStock1y(symbol);
-        }
-      }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.props.requestStock3m(symbol);
-        }
-      }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: function onClick() {
-          return _this2.props.requestStock1m(symbol);
-        }
-      }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this2.props.requestStock5d(symbol);
         }
       }, "5D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
-          return _this2.props.requestStock1d(symbol);
+          return _this2.props.requestStock1m(symbol);
         }
-      }, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.requestStock3m(symbol);
+        }
+      }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.requestStock1y(symbol);
+        }
+      }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this2.props.requestStock5y(symbol);
+        }
+      }, "5Y")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "about-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "about"
@@ -1270,7 +1357,7 @@ function (_React$Component) {
         className: "details-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Security Name", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.securityName)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Exchange", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.exchange))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "details-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sector", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.sector)))), console.log(this.props.watchlists[symbol]), console.log(symbol), this.state.watched ? removeFromWatchlist() : addToWatchlist()) //stock-show-box
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sector", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.sector)))), this.state.watched ? removeFromWatchlist() : addToWatchlist()) //stock-show-box
       ;
     } //render
 
@@ -1297,7 +1384,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_company_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/company_actions */ "./frontend/actions/company_actions.js");
 /* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
-/* harmony import */ var _stock_show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stock_show */ "./frontend/components/stocks/stock_show.jsx");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _stock_show__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stock_show */ "./frontend/components/stocks/stock_show.jsx");
+
 
 
 
@@ -1310,14 +1399,15 @@ var msp = function msp(state, ownProps) {
     stocks[stock.symbol] = stock;
   });
   var watchlists = {};
-  state.entities.users[state.session.id].watchlists.forEach(function (watchlist) {
+  state.session.watchlists.forEach(function (watchlist) {
     watchlists[watchlist.symbol] = watchlist;
-  });
+  }); // console.log(state)
+
   return {
     stock: state.entities.stock,
     stocks: stocks,
     company: state.entities.company,
-    currentUser: state.entities.users[state.session.id],
+    currentUser: state.session,
     watchlist: {
       user_id: state.session.id,
       symbol: ownProps.match.params.symbol
@@ -1329,9 +1419,7 @@ var msp = function msp(state, ownProps) {
 var mdp = function mdp(dispatch) {
   return {
     // requestAllStocks: () => dispatch(requestAllStocks()),
-    requestStock: function requestStock(symbol) {
-      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["requestStock"])(symbol));
-    },
+    // requestStock: symbol => dispatch(requestStock(symbol)),
     requestStock5y: function requestStock5y(symbol) {
       return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["requestStock5y"])(symbol));
     },
@@ -1358,11 +1446,14 @@ var mdp = function mdp(dispatch) {
     },
     deleteWatchlist: function deleteWatchlist(watchlistId) {
       return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_3__["deleteWatchlist"])(watchlistId));
+    },
+    fetchUser: function fetchUser(user_id) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["fetchUser"])(user_id));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_stock_show__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_stock_show__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
 /***/ }),
 
@@ -1444,17 +1535,119 @@ function (_React$Component) {
   }
 
   _createClass(WatchlistShow, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var symbols = this.props.currentUser.watchlists.map(function (watchlist) {
+        return watchlist.symbol;
+      }).join(',');
+      this.props.requestWatching1d(symbols);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var symbols = Object.values(this.props.watchlists).map(function (watchlist) {
+      var _this = this;
+
+      // For Watchlist Index
+      var symbolsIDX = Object.values(this.props.currentUser.watchlists).map(function (watchlist) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_index_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
           watchlist: watchlist,
           key: watchlist.symbol
         });
+      }); // For Watchlist Chart
+
+      var data = [];
+      var symbols = this.props.currentUser.watchlists.map(function (watchlist) {
+        return watchlist.symbol;
+      }).join(',');
+      Object.values(this.props.watching).forEach(function (watch) {
+        // console.log(watch.chart)
+        watch.chart.forEach(function (dot, i) {
+          if (!data[i]) data[i] = {};
+          if (!data[i].date) data[i].date = dot.date;
+          if (!data[i].minute) data[i].minute = dot.minute;
+          if (!dot.close) dot.close = watch.chart[i - 1].close;
+          if (!data[i].close) data[i].close = dot.close;
+          data[i].close += dot.close;
+        }); // console.log(data)
       });
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "watchlist-stock-show-box"
-      }, console.log(symbols), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, symbols));
+      data.forEach(function (stock) {
+        stock.datetime = stock.date + ' ' + (stock.minute || '');
+      });
+      var close = data.map(function (stock) {
+        return stock.close;
+      }); // const close = this.props.data ? this.props.data.map((object) => (object.close)) : []
+
+      var min = -Infinity;
+      var max = Infinity;
+
+      if (data.length >= 1) {
+        min = close.reduce(function (acc, el) {
+          return Math.min(acc, el);
+        });
+        max = close.reduce(function (acc, el) {
+          return Math.max(acc, el);
+        });
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "for-space-between"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-show-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: "company-name"
+      }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["LineChart"], {
+        className: "chart",
+        width: 676,
+        height: 196,
+        data: data,
+        margin: {
+          top: 5,
+          right: 20,
+          left: 10,
+          bottom: 5
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["XAxis"], {
+        dataKey: "datetime",
+        hide: true
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["YAxis"], {
+        dataKey: "close",
+        hide: true,
+        domain: [min, max]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Tooltip"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_2__["Line"], {
+        type: "monotone",
+        dataKey: "close",
+        dot: false,
+        stroke: "#21ce99",
+        yAxisId: 0
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "button-time-period"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching1d(symbols);
+        }
+      }, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching5d(symbols);
+        }
+      }, "5D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching1m(symbols);
+        }
+      }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching3m(symbols);
+        }
+      }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching1y(symbols);
+        }
+      }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.requestWatching5y(symbols);
+        }
+      }, "5Y"))), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "watchlist-index-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, symbolsIDX)), " "), " ");
     } // render
 
   }]);
@@ -1477,7 +1670,7 @@ function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/watching_actions */ "./frontend/actions/watching_actions.js");
 /* harmony import */ var _actions_company_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/company_actions */ "./frontend/actions/company_actions.js");
 /* harmony import */ var _actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/watchlist_actions */ "./frontend/actions/watchlist_actions.js");
 /* harmony import */ var _watchlist_show__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./watchlist_show */ "./frontend/components/watchlist/watchlist_show.jsx");
@@ -1492,31 +1685,43 @@ var msp = function msp(state, ownProps) {
   // Object.values(state.entities.all_stocks).forEach((stock)=>{
   //     stocks[stock.symbol] = stock;
   // })
-  var watchlists = {};
-  state.entities.users[state.session.id].watchlists.forEach(function (watchlist) {
-    watchlists[watchlist.symbol] = watchlist;
-  });
+  // debugger
+  // let watchlists = {};
+  // state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
+  //     watchlists[watchlist.symbol] = watchlist
+  // })
+  // console.log(state)
   return {
-    stock: state.entities.stock,
+    // stock: state.entities.stock, 
     // stocks: stocks, 
-    company: state.entities.company,
-    currentUser: state.entities.users[state.session.id],
-    // watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
-    watchlists: watchlists
+    // company: state.entities.company,
+    currentUser: state.session,
+    watching: state.entities.watching // watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
+    // watchlists: watchlists,
+
   };
 };
 
 var mdp = function mdp(dispatch) {
   return {
-    // requestAllStocks: () => dispatch(requestAllStocks()),
-    // requestStock: symbol => dispatch(requestStock(symbol)),
-    // requestStock5y: symbol => dispatch(requestStock5y(symbol)),
-    // requestStock1y: symbol => dispatch(requestStock1y(symbol)),
-    // requestStock3m: symbol => dispatch(requestStock3m(symbol)),
-    // requestStock1m: symbol => dispatch(requestStock1m(symbol)),
-    // requestStock5d: symbol => dispatch(requestStock5d(symbol)),
-    // requestStock1d: symbol => dispatch(requestStock1d(symbol)),
-    // requestCompany: symbol => dispatch(requestCompany(symbol)),
+    requestWatching5y: function requestWatching5y(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching5y"])(symbols));
+    },
+    requestWatching1y: function requestWatching1y(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching1y"])(symbols));
+    },
+    requestWatching3m: function requestWatching3m(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching3m"])(symbols));
+    },
+    requestWatching1m: function requestWatching1m(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching1m"])(symbols));
+    },
+    requestWatching5d: function requestWatching5d(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching5d"])(symbols));
+    },
+    requestWatching1d: function requestWatching1d(symbols) {
+      return dispatch(Object(_actions_watching_actions__WEBPACK_IMPORTED_MODULE_1__["requestWatching1d"])(symbols));
+    },
     createWatchlist: function createWatchlist(watchlist) {
       return dispatch(Object(_actions_watchlist_actions__WEBPACK_IMPORTED_MODULE_3__["createWatchlist"])(watchlist));
     },
@@ -1545,8 +1750,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //React
 
  //Components
@@ -1558,11 +1761,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (window.currentUser) {
     var preloadedState = {
-      session: {
-        id: window.currentUser.id
-      },
-      entities: {
-        users: _defineProperty({}, window.currentUser.id, window.currentUser)
+      session: window.currentUser,
+      entities: {// users: { [window.currentUser.id]: window.currentUser }
       }
     };
     store = Object(_store_store__WEBPACK_IMPORTED_MODULE_3__["default"])(preloadedState);
@@ -1627,16 +1827,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/stocks_reducer.js");
 /* harmony import */ var _stock_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stock_reducer */ "./frontend/reducers/stock_reducer.js");
 /* harmony import */ var _company_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./company_reducer */ "./frontend/reducers/company_reducer.js");
+/* harmony import */ var _watching_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./watching_reducer */ "./frontend/reducers/watching_reducer.js");
 
 
 
 
+
+ // import watchlists from './watchlist_reducer'
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  // users,
   all_stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   stock: _stock_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  company: _company_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  company: _company_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  watching: _watching_reducer__WEBPACK_IMPORTED_MODULE_5__["default"] // watchlists,
+
 }));
 
 /***/ }),
@@ -1772,7 +1977,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _nullUser = Object.freeze({
-  id: null
+  id: null,
+  session_token: null
 });
 
 var sessionReducer = function sessionReducer() {
@@ -1782,9 +1988,7 @@ var sessionReducer = function sessionReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      return {
-        id: action.currentUser.id
-      };
+      return action.currentUser;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
@@ -1897,8 +2101,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
 /* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/session_actions */ "./frontend/actions/session_actions.js");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -1908,15 +2110,48 @@ var usersReducer = function usersReducer() {
   Object.freeze(state);
 
   switch (action.type) {
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
-      return lodash_merge__WEBPACK_IMPORTED_MODULE_0___default()({}, state, _defineProperty({}, action.currentUser.id, action.currentUser));
-
+    // case RECEIVE_CURRENT_USER:
+    // return merge({}, state, { [action.currentUser.id]: action.currentUser });
     default:
       return state;
   }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (usersReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/watching_reducer.js":
+/*!***********************************************!*\
+  !*** ./frontend/reducers/watching_reducer.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_watching_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/watching_actions */ "./frontend/actions/watching_actions.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var watchingReducer = function watchingReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state);
+
+  switch (action.type) {
+    case _actions_watching_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_WATCHING"]:
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.watching);
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (watchingReducer);
 
 /***/ }),
 
@@ -2033,7 +2268,7 @@ var ProtectedRoute = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withR
 /*!*******************************************!*\
   !*** ./frontend/util/session_api_util.js ***!
   \*******************************************/
-/*! exports provided: login, signup, logout */
+/*! exports provided: login, signup, logout, fetchUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2041,6 +2276,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUser", function() { return fetchUser; });
 var login = function login(user) {
   return $.ajax({
     method: 'POST',
@@ -2063,6 +2299,12 @@ var logout = function logout() {
   return $.ajax({
     method: 'DELETE',
     url: '/api/session'
+  });
+};
+var fetchUser = function fetchUser(id) {
+  return $.ajax({
+    method: 'GET',
+    url: "/api/user/".concat(id)
   });
 };
 
@@ -2149,6 +2391,60 @@ var fetchStock1d = function fetchStock1d(symbol) {
 
 /***/ }),
 
+/***/ "./frontend/util/watching_api_util.js":
+/*!********************************************!*\
+  !*** ./frontend/util/watching_api_util.js ***!
+  \********************************************/
+/*! exports provided: fetchWatching5y, fetchWatching1y, fetchWatching3m, fetchWatching1m, fetchWatching5d, fetchWatching1d */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching5y", function() { return fetchWatching5y; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching1y", function() { return fetchWatching1y; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching3m", function() { return fetchWatching3m; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching1m", function() { return fetchWatching1m; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching5d", function() { return fetchWatching5d; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchWatching1d", function() { return fetchWatching1d; });
+var fetchWatching5y = function fetchWatching5y(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=5y&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+var fetchWatching1y = function fetchWatching1y(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=1y&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+var fetchWatching3m = function fetchWatching3m(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=3m&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+var fetchWatching1m = function fetchWatching1m(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=1m&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+var fetchWatching5d = function fetchWatching5d(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=5d&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+var fetchWatching1d = function fetchWatching1d(symbols) {
+  return $.ajax({
+    method: "GET",
+    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=1d&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+  });
+};
+
+/***/ }),
+
 /***/ "./frontend/util/watchlist_api_util.js":
 /*!*********************************************!*\
   !*** ./frontend/util/watchlist_api_util.js ***!
@@ -2163,16 +2459,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteWatchlist", function() { return deleteWatchlist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createWatchlist", function() { return createWatchlist; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateWatchlist", function() { return updateWatchlist; });
-// export const fetchWatchlists = () => (
-//     $.ajax({
-//         method: "GET",
-//         url: `api/watchlists`
-//     })
-// )
-var fetchWatchlists = function fetchWatchlists(symbols) {
+var fetchWatchlists = function fetchWatchlists() {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/market/batch?symbols=".concat(symbols, "&types=quote,chart&range=1m&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+    url: "api/watchlists"
   });
 };
 var fetchWatchlist = function fetchWatchlist(id) {

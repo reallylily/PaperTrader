@@ -1,14 +1,8 @@
-// export const fetchWatchlists = () => (
-//     $.ajax({
-//         method: "GET",
-//         url: `api/watchlists`
-//     })
-// )
-
-export const fetchWatchlists = symbols => (
+     
+export const fetchWatchlists = () => (
     $.ajax({
         method: "GET",
-        url: `https://sandbox.iexapis.com/stable/stock/market/batch?symbols=${symbols}&types=quote,chart&range=1m&last=5&token=Tpk_9ae29b1583b348919535a4d19affb8dc`
+        url: `api/watchlists`
     })
 )
 

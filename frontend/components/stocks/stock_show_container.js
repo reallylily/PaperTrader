@@ -12,6 +12,7 @@ import { requestCompany } from '../../actions/company_actions'
 import { createWatchlist,
     deleteWatchlist
  } from '../../actions/watchlist_actions'
+import { fetchUser } from '../../actions/session_actions'
 import StockShow from './stock_show';
 
 const msp = (state, ownProps) => {
@@ -20,14 +21,15 @@ const msp = (state, ownProps) => {
         stocks[stock.symbol] = stock;
     })
     let watchlists = {};
-    state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
+    state.session.watchlists.forEach(watchlist =>{
         watchlists[watchlist.symbol] = watchlist
     })
+    // console.log(state)
     return ({
         stock: state.entities.stock, 
         stocks: stocks, 
         company: state.entities.company,
-        currentUser: state.entities.users[state.session.id],
+        currentUser: state.session,
         watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
         
         watchlists: watchlists,
@@ -36,7 +38,7 @@ const msp = (state, ownProps) => {
 
 const mdp = dispatch => ({
     // requestAllStocks: () => dispatch(requestAllStocks()),
-    requestStock: symbol => dispatch(requestStock(symbol)),
+    // requestStock: symbol => dispatch(requestStock(symbol)),
     requestStock5y: symbol => dispatch(requestStock5y(symbol)),
     requestStock1y: symbol => dispatch(requestStock1y(symbol)),
     requestStock3m: symbol => dispatch(requestStock3m(symbol)),
@@ -44,10 +46,11 @@ const mdp = dispatch => ({
     requestStock5d: symbol => dispatch(requestStock5d(symbol)),
     requestStock1d: symbol => dispatch(requestStock1d(symbol)),
     requestCompany: symbol => dispatch(requestCompany(symbol)),
+
     createWatchlist: watchlist => dispatch(createWatchlist(watchlist)),
     deleteWatchlist: watchlistId => dispatch(deleteWatchlist(watchlistId)),
 
-
+    fetchUser: user_id => dispatch(fetchUser(user_id)),
 })
 
 export default connect(msp, mdp)(StockShow)

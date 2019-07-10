@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
-import { requestAllStocks, 
-    requestStock, //dynamic api call
-    requestStock5y,
-    requestStock1y,
-    requestStock3m,
-    requestStock1m,
-    requestStock5d,
-    requestStock1d
- } from '../../actions/stock_actions';
+import {
+    requestWatching5y,
+    requestWatching1y,
+    requestWatching3m,
+    requestWatching1m,
+    requestWatching5d,
+    requestWatching1d
+ } from '../../actions/watching_actions';
 import { requestCompany } from '../../actions/company_actions'
 import { createWatchlist,
-    deleteWatchlist
+    deleteWatchlist,
+    // requestWatchlists,
  } from '../../actions/watchlist_actions'
 import WatchlistShow from './watchlist_show';
 
@@ -19,31 +19,31 @@ const msp = (state, ownProps) => {
     // Object.values(state.entities.all_stocks).forEach((stock)=>{
     //     stocks[stock.symbol] = stock;
     // })
-    let watchlists = {};
-    state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
-        watchlists[watchlist.symbol] = watchlist
-    })
+    // debugger
+    // let watchlists = {};
+    // state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
+    //     watchlists[watchlist.symbol] = watchlist
+    // })
+    // console.log(state)
     return ({
-        stock: state.entities.stock, 
+        // stock: state.entities.stock, 
         // stocks: stocks, 
-        company: state.entities.company,
-        currentUser: state.entities.users[state.session.id],
+        // company: state.entities.company,
+        currentUser: state.session,
+        watching: state.entities.watching,
         // watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
         
-        watchlists: watchlists,
+        // watchlists: watchlists,
     })
 }
 
 const mdp = dispatch => ({
-    // requestAllStocks: () => dispatch(requestAllStocks()),
-    // requestStock: symbol => dispatch(requestStock(symbol)),
-    // requestStock5y: symbol => dispatch(requestStock5y(symbol)),
-    // requestStock1y: symbol => dispatch(requestStock1y(symbol)),
-    // requestStock3m: symbol => dispatch(requestStock3m(symbol)),
-    // requestStock1m: symbol => dispatch(requestStock1m(symbol)),
-    // requestStock5d: symbol => dispatch(requestStock5d(symbol)),
-    // requestStock1d: symbol => dispatch(requestStock1d(symbol)),
-    // requestCompany: symbol => dispatch(requestCompany(symbol)),
+    requestWatching5y: symbols => dispatch(requestWatching5y(symbols)),
+    requestWatching1y: symbols => dispatch(requestWatching1y(symbols)),
+    requestWatching3m: symbols => dispatch(requestWatching3m(symbols)),
+    requestWatching1m: symbols => dispatch(requestWatching1m(symbols)),
+    requestWatching5d: symbols => dispatch(requestWatching5d(symbols)),
+    requestWatching1d: symbols => dispatch(requestWatching1d(symbols)),
     createWatchlist: watchlist => dispatch(createWatchlist(watchlist)),
     deleteWatchlist: watchlistId => dispatch(deleteWatchlist(watchlistId)),
 

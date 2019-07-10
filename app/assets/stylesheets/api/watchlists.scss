@@ -2,6 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.watchlist-stock-show-box {
-    margin-top: 150px;
+// .watchlist-stock-show-box {
+//     margin-top: 150px;
+// }
+
+.watchlist-index-box {
+    margin-top: 100px;
+    margin-left: 20px;
+}
+.for-space-between {
+    display: flex;
+    justify-content:flex-start;
 }

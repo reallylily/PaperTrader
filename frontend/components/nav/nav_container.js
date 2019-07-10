@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   })
   return {
     stocks: stocks,
-    currentUser: state.entities.users[state.session.id]
+    currentUser: state.session
   };
 };
 

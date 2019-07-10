@@ -20,8 +20,8 @@ const removeWatchlist = watchlistId =>({
     watchlistId
 })
 
-export const requestWatchlists = symbols => dispatch => (
-    WatchlistAPIUtil.fetchWatchlists(symbols).then(watchlists => dispatch(receiveWatchlists(watchlists)))
+export const requestWatchlists = () => dispatch => (
+    WatchlistAPIUtil.fetchWatchlists().then(watchlists => dispatch(receiveWatchlists(watchlists)))
 )
 
 export const requestWatchlist = id => dispatch => (

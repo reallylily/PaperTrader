@@ -1,1 +1,1 @@
-json.extract! user, :id, :username, :watchlists
+json.extract! user, :id, :username, :session_token, :watchlists
