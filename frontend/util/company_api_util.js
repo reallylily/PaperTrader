@@ -2,6 +2,6 @@
 export const fetchCompany = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/company/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
+        url: `https://cloud.iexapis.com/stable/stock/${symbol}/company/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac`
     })
 )

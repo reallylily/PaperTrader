@@ -34,6 +34,7 @@ const msp = (state, ownProps) => {
         watchlist: {user_id: state.session.id, symbol: ownProps.match.params.symbol },
         
         watchlists: state.session.watchlists,
+        history: ownProps.history,
     })
 }
 

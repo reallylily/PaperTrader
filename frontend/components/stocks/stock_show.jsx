@@ -1,8 +1,6 @@
 import React from 'react';
 import NavContainer from '../nav/nav_container'
-// import WatchlistFormContainer from '../watchlist/watchlist_form_container'
-import { LineChart, Line, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-
+import Chart from '../chart/chart'
 
 
 class StockShow extends React.Component {
@@ -54,41 +52,17 @@ class StockShow extends React.Component {
   }
 
   render() {
-    console.log(this.state.watched)
-    const symbol = this.props.match.params.symbol
-    let stock_array = Object.values(this.props.stock)
-    stock_array.forEach((stock, idx)=>{ 
-      if(!stock.close) stock.close = stock_array[idx-1].close
-      stock.datetime = stock.date + ' ' + (stock.minute || '') 
-    })
-    const close = stock_array.map(stock=>(stock.close))
-    let min = -Infinity
-    let max = Infinity
-    if (stock_array.length >= 1) {
 
-      min = close.reduce((acc, el) => (Math.min( acc, el )))
-      max = close.reduce((acc, el) => (Math.max( acc, el )))
-      
-    }
+    const symbol = this.props.match.params.symbol
+
     const addToWatchlist = () => ( <button onClick={this.addToWatchlist}>Add to Watchlist</button> )
     const removeFromWatchlist = () => ( <button onClick={this.removeFromWatchlist}>Remove from Watchlist</button> )
     return (
       <div className='stock-show-box'>
-        <NavContainer/>
+        <NavContainer history={this.props.history}/>
         <h1 className='company-name'>{this.props.company.companyName}</h1>
-        <LineChart className='chart'
-          width={676}
-          height={196}
-          data={stock_array}
-          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-          >
-          <XAxis dataKey="datetime" hide={true}/>
-          <YAxis dataKey="close" hide={true} domain={[min, max]}/>
 
-          <Line type="monotone" dataKey="close" dot={false} stroke='#21ce99' yAxisId={0} />
-
-          <Tooltip /> 
-        </LineChart>
+        <Chart data={Object.values(this.props.stock)}/>
         <div className="button-time-period">
           <button onClick={()=>this.props.requestStock1d(symbol)}>1D</button>
           <button onClick={()=>this.props.requestStock5d(symbol)}>5D</button>

@@ -1,15 +1,29 @@
 import React from 'react';
 // import NavContainer from '../nav/nav_container'
 import { Link } from 'react-router-dom';
+import SearchContainer from '../search/search_container'
 
 class Nav extends React.Component {
 
-  componentDidMount(){
-    if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
-  }
+  // componentDidMount(){
+  //   if ( Object.values(this.props.stocks).length === 0 ) this.props.requestAllStocks()
+  //   // debugger
+  // }
 
   render() {
-    const { currentUser, logout } = this.props;
+
+    const names = [
+      'Abba',
+      'Barney',
+      'Barbara',
+      'Jeff',
+      'Jenny',
+      'Sarah',
+      'Sally',
+      'Xander'
+    ];
+
+    const { history, currentUser, logout } = this.props;
     const sessionLinks = () => (
       <nav className="login-signup">
         <nav className="signup">
@@ -25,6 +39,7 @@ class Nav extends React.Component {
         {/* <i class="fas fa-user" className="fas fa-user"></i> */}
         <button className="header-button-logout" onClick={logout}>Log Out</button>
         <h2 className="header-name">{currentUser.username}</h2>
+        <SearchContainer names={names} history={history}/>
       </hgroup>
     );
     const nav = () => (
@@ -37,7 +52,7 @@ class Nav extends React.Component {
       { currentUser ? personalGreeting() : sessionLinks() }
       </header>
     )
-  
+      
     return (
       <div>
           {nav()}

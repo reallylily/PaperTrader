@@ -11,9 +11,18 @@ ActiveRecord::Base.transaction do
     User.destroy_all
 
     # Create demo/testing users
-    demo_user = User.new({ username: 'demo_user', password: 'password' })
-    demo_user.save!
-    user = User.new({ username: 'test', password: 'password' })
-    user.save!
+    User.create({ username: 'demo_user', password: 'password' })
+    User.create({ username: 'test', password: 'password' })
+
+    Watchlist.create({ user_id: '1', symbol: 'AAPL' })
+    Watchlist.create({ user_id: '1', symbol: 'GOOG' })
+    Watchlist.create({ user_id: '1', symbol: 'AMZN' })
+    Watchlist.create({ user_id: '1', symbol: 'MSFT' })
+    
+    Watchlist.create({ user_id: '2', symbol: 'AAPL' })
+    Watchlist.create({ user_id: '2', symbol: 'GOOG' })
+    Watchlist.create({ user_id: '2', symbol: 'AMZN' })
+    Watchlist.create({ user_id: '2', symbol: 'MSFT' })
+
 end
 
