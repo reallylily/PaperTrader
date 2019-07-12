@@ -18,6 +18,18 @@ const sessionReducer = (state = _nullUser, action) => {
       })
       action.currentUser.watchlists = newWatchlists;
       // debugger
+
+      let portfolio = {}
+      action.currentUser.trades.forEach(trade=>{
+        if (trade.trade_type === "Buy") {
+          if (!portfolio[trade.symbol]) portfolio[trade.symbol] = 0;
+          portfolio[trade.symbol] += trade.shares;
+        } else {
+          portfolio[trade.symbol] -= trade.shares;
+        }
+      })
+      action.currentUser.portfolio = portfolio;
+
       return action.currentUser
     case LOGOUT_CURRENT_USER:
       return _nullUser;

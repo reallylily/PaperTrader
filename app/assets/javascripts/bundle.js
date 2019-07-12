@@ -227,17 +227,19 @@ var fetchUser = function fetchUser(id) {
 /*!*******************************************!*\
   !*** ./frontend/actions/stock_actions.js ***!
   \*******************************************/
-/*! exports provided: FETCH_ALL_STOCKS, RECEIVE_STOCK, receiveAllStocks, receiveStock, requestAllStocks, requestStock, requestStock5y, requestStock1y, requestStock3m, requestStock1m, requestStock5d, requestStock1d */
+/*! exports provided: FETCH_ALL_STOCKS, RECEIVE_STOCK, RECEIVE_QUOTE, receiveAllStocks, receiveStock, receiveQuote, requestAllStocks, requestQuote, requestStock5y, requestStock1y, requestStock3m, requestStock1m, requestStock5d, requestStock1d */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FETCH_ALL_STOCKS", function() { return FETCH_ALL_STOCKS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_STOCK", function() { return RECEIVE_STOCK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_QUOTE", function() { return RECEIVE_QUOTE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveAllStocks", function() { return receiveAllStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveStock", function() { return receiveStock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "receiveQuote", function() { return receiveQuote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestAllStocks", function() { return requestAllStocks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestStock", function() { return requestStock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestQuote", function() { return requestQuote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestStock5y", function() { return requestStock5y; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestStock1y", function() { return requestStock1y; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "requestStock3m", function() { return requestStock3m; });
@@ -248,6 +250,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var FETCH_ALL_STOCKS = 'FETCH_ALL_STOCKS';
 var RECEIVE_STOCK = 'RECEIVE_STOCK';
+var RECEIVE_QUOTE = 'RECEIVE_QUOTE';
 var receiveAllStocks = function receiveAllStocks(all_stocks) {
   return {
     type: FETCH_ALL_STOCKS,
@@ -260,6 +263,12 @@ var receiveStock = function receiveStock(stock) {
     stock: stock
   };
 };
+var receiveQuote = function receiveQuote(quote) {
+  return {
+    type: RECEIVE_QUOTE,
+    quote: quote
+  };
+};
 var requestAllStocks = function requestAllStocks() {
   return function (dispatch) {
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchAllStocks"]().then(function (all_stocks) {
@@ -267,10 +276,10 @@ var requestAllStocks = function requestAllStocks() {
     });
   };
 };
-var requestStock = function requestStock(symbol) {
+var requestQuote = function requestQuote(symbol) {
   return function (dispatch) {
-    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](symbol).then(function (symbol) {
-      return dispatch(receiveStock(symbol));
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchQuote"](symbol).then(function (symbol) {
+      return dispatch(receiveQuote(symbol));
     });
   };
 }; // 5y 1y 3m 1m 7d 1d
@@ -314,6 +323,38 @@ var requestStock1d = function requestStock1d(symbol) {
   return function (dispatch) {
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock1d"](symbol).then(function (symbol) {
       return dispatch(receiveStock(symbol));
+    });
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/trade_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/trade_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_TRADE, createTrade */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRADE", function() { return RECEIVE_TRADE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTrade", function() { return createTrade; });
+/* harmony import */ var _util_trade_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/trade_api_util */ "./frontend/util/trade_api_util.js");
+
+var RECEIVE_TRADE = 'RECEIVE_TRADE';
+
+var receiveTrade = function receiveTrade(trade) {
+  return {
+    type: RECEIVE_TRADE,
+    trade: trade
+  };
+};
+
+var createTrade = function createTrade(trade) {
+  return function (dispatch) {
+    return _util_trade_api_util__WEBPACK_IMPORTED_MODULE_0__["createTrade"](trade).then(function (trade) {
+      return dispatch(receiveTrade(trade));
     });
   };
 };
@@ -954,8 +995,8 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       // this.state.inoutVal === 'AAPL'
-      e.preventDefault();
-      console.log(this);
+      e.preventDefault(); // console.log(this)
+
       this.props.history.push("/stocks/".concat(this.state.inputVal));
     }
   }, {
@@ -966,8 +1007,8 @@ function (_React$Component) {
       // debugger
       // let symbols = Object.keys(this.props.stocks)
       // console.log(this.props.symbols)
-      console.log(this.props); // const matches = this.props.stocks;
-
+      // console.log(this.props)
+      // const matches = this.props.stocks;
       var matches = []; // if (this.state.inputVal.length === 0) {
       //   return this.props.symbols;
       // }
@@ -1430,6 +1471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nav_nav_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../nav/nav_container */ "./frontend/components/nav/nav_container.js");
 /* harmony import */ var _chart_chart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../chart/chart */ "./frontend/components/chart/chart.jsx");
+/* harmony import */ var _trade_trade_form_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../trade/trade_form_container */ "./frontend/components/trade/trade_form_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1447,6 +1489,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1530,7 +1573,10 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
+      // console.log(this.props)
       var symbol = this.props.match.params.symbol;
+      var data = Object.values(this.props.stock); // let price = Object.keys(this.props.stock)
+      // let price = this.props
 
       var addToWatchlist = function addToWatchlist() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1551,7 +1597,7 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "company-name"
       }, this.props.company.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_chart_chart__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        data: Object.values(this.props.stock)
+        data: data
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "button-time-period"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1562,7 +1608,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this4.props.requestStock5d(symbol);
         }
-      }, "5D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this4.props.requestStock1m(symbol);
         }
@@ -1588,7 +1634,10 @@ function (_React$Component) {
         className: "details-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Security Name", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.securityName)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Exchange", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.exchange))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "details-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sector", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.sector)))), this.state.watched ? removeFromWatchlist() : addToWatchlist()) //stock-show-box
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.industry)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Sector", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, this.props.company.sector)))), this.state.watched ? removeFromWatchlist() : addToWatchlist(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_trade_trade_form_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        symbol: symbol,
+        match: this.props.match
+      })) //stock-show-box
       ;
     } //render
 
@@ -1687,6 +1736,196 @@ var mdp = function mdp(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_stock_show__WEBPACK_IMPORTED_MODULE_5__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/trade/trade_form.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/trade/trade_form.jsx ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+ // import NavContainer from '../nav/nav_container'
+// import Chart from '../chart/chart'
+
+var TradeForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TradeForm, _React$Component);
+
+  function TradeForm(props) {
+    var _this;
+
+    _classCallCheck(this, TradeForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TradeForm).call(this, props)); // this.state = { watched: false }
+    // this.addToWatchlist = this.addToWatchlist.bind(this);
+
+    _this.state = _this.props.trade; // this.selectName = this.selectName.bind(this);
+
+    _this.handleInputShares = _this.handleInputShares.bind(_assertThisInitialized(_this));
+    _this.handleInputTradeType = _this.handleInputTradeType.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(TradeForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.props.requestQuote(this.props.symbol).then(function (quote) {
+        console.log(quote.quote.close);
+
+        _this2.setState({
+          price: quote.quote.close
+        });
+
+        console.log(_this2.state);
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.symbol !== prevProps.symbol) {
+        this.state = this.props.trade;
+      }
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.state.price *= this.state.shares;
+      this.props.createTrade(this.state).then(function () {
+        _this3.props.fetchUser(_this3.props.currentUser.id).then(function () {// let symbol = this.props.trade.symbol
+          // this.setState({ watched: Boolean(this.props.watchlists[symbol]) })
+        });
+      });
+    }
+  }, {
+    key: "handleInputShares",
+    value: function handleInputShares(event) {
+      this.setState({
+        shares: event.currentTarget.value
+      });
+    }
+  }, {
+    key: "handleInputTradeType",
+    value: function handleInputTradeType(event) {
+      this.setState({
+        trade_type: event.currentTarget.value
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "trade-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Buying Power: $", this.props.currentUser.bank), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Symbol: ", this.state.symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Shares:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "number",
+        onChange: this.handleInputShares,
+        value: this.state.shares,
+        placeholder: "Search..."
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Price:", this.state.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "trade_type",
+        onChange: this.handleInputTradeType
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Buy"
+      }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Sell"
+      }, "Sell")), this.state.shares, " for $", this.state.price * this.state.shares), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: this.state.trade_type
+      }))));
+    } //render
+
+  }]);
+
+  return TradeForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // class
+
+
+/* harmony default export */ __webpack_exports__["default"] = (TradeForm);
+
+/***/ }),
+
+/***/ "./frontend/components/trade/trade_form_container.js":
+/*!***********************************************************!*\
+  !*** ./frontend/components/trade/trade_form_container.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_trade_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/trade_actions */ "./frontend/actions/trade_actions.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _trade_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./trade_form */ "./frontend/components/trade/trade_form.jsx");
+
+
+
+
+
+
+var msp = function msp(state, ownProps) {
+  // debugger
+  return {
+    currentUser: state.session,
+    trade: {
+      user_id: state.session.id,
+      symbol: ownProps.symbol,
+      shares: 0,
+      price: state.entities.quote.close,
+      trade_type: 'Buy'
+    },
+    trades: state.session.trades
+  };
+};
+
+var mdp = function mdp(dispatch) {
+  return {
+    fetchUser: function fetchUser(user_id) {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_3__["fetchUser"])(user_id));
+    },
+    requestQuote: function requestQuote(symbol) {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__["requestQuote"])(symbol));
+    },
+    createTrade: function createTrade(trade) {
+      return dispatch(Object(_actions_trade_actions__WEBPACK_IMPORTED_MODULE_1__["createTrade"])(trade));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(msp, mdp)(_trade_form__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -1825,7 +2064,7 @@ function (_React$Component) {
         onClick: function onClick() {
           return _this.props.requestWatching5d(symbols);
         }
-      }, "5D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
           return _this.props.requestWatching1m(symbols);
         }
@@ -1852,7 +2091,7 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // class
 
 
-/* harmony default export */ __webpack_exports__["default"] = (WatchlistShow);
+/* harmony default export */ __webpack_exports__["default"] = (WatchlistShow); // let trade = {user_id: 2 , symbol: 'AMZN', shares: 10, price: 100, trade_type: 'buy'}
 
 /***/ }),
 
@@ -1962,6 +2201,16 @@ document.addEventListener('DOMContentLoaded', function () {
       newWatchlists[watchlist.symbol] = watchlist;
     });
     window.currentUser.watchlists = newWatchlists;
+    var portfolio = {};
+    window.currentUser.trades.forEach(function (trade) {
+      if (trade.trade_type === "Buy") {
+        if (!portfolio[trade.symbol]) portfolio[trade.symbol] = 0;
+        portfolio[trade.symbol] += trade.shares;
+      } else {
+        portfolio[trade.symbol] -= trade.shares;
+      }
+    });
+    window.currentUser.portfolio = portfolio;
     var preloadedState = {
       session: window.currentUser,
       entities: {// users: { [window.currentUser.id]: window.currentUser }
@@ -2030,6 +2279,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stock_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stock_reducer */ "./frontend/reducers/stock_reducer.js");
 /* harmony import */ var _company_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./company_reducer */ "./frontend/reducers/company_reducer.js");
 /* harmony import */ var _watching_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./watching_reducer */ "./frontend/reducers/watching_reducer.js");
+/* harmony import */ var _quote_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./quote_reducer */ "./frontend/reducers/quote_reducer.js");
+
 
 
 
@@ -2041,6 +2292,7 @@ __webpack_require__.r(__webpack_exports__);
   // users,
   all_stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   stock: _stock_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  quote: _quote_reducer__WEBPACK_IMPORTED_MODULE_6__["default"],
   company: _company_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   watching: _watching_reducer__WEBPACK_IMPORTED_MODULE_5__["default"] // watchlists,
 
@@ -2103,6 +2355,42 @@ var filtersReducer = function filtersReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (filtersReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/quote_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/quote_reducer.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/merge */ "./node_modules/lodash/merge.js");
+/* harmony import */ var lodash_merge__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_merge__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var quoteReducer = function quoteReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var newState = lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, state);
+
+  switch (action.type) {
+    // case RECEIVE_STOCK:
+    //     return  merge({}, action.stock);
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_QUOTE"]:
+      return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.quote);
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (quoteReducer);
 
 /***/ }),
 
@@ -2195,6 +2483,16 @@ var sessionReducer = function sessionReducer() {
       });
       action.currentUser.watchlists = newWatchlists; // debugger
 
+      var portfolio = {};
+      action.currentUser.trades.forEach(function (trade) {
+        if (trade.trade_type === "Buy") {
+          if (!portfolio[trade.symbol]) portfolio[trade.symbol] = 0;
+          portfolio[trade.symbol] += trade.shares;
+        } else {
+          portfolio[trade.symbol] -= trade.shares;
+        }
+      });
+      action.currentUser.portfolio = portfolio;
       return action.currentUser;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
@@ -2233,6 +2531,8 @@ var stockReducer = function stockReducer() {
   switch (action.type) {
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
       return lodash_merge__WEBPACK_IMPORTED_MODULE_1___default()({}, action.stock);
+    // case RECEIVE_QUOTE:
+    //     return  merge({}, action.quote);
 
     default:
       return state;
@@ -2521,13 +2821,13 @@ var fetchUser = function fetchUser(id) {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchAllStocks, fetchStock, fetchStock5y, fetchStock1y, fetchStock3m, fetchStock1m, fetchStock5d, fetchStock1d */
+/*! exports provided: fetchAllStocks, fetchQuote, fetchStock5y, fetchStock1y, fetchStock3m, fetchStock1m, fetchStock5d, fetchStock1d */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchAllStocks", function() { return fetchAllStocks; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchQuote", function() { return fetchQuote; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock5y", function() { return fetchStock5y; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock1y", function() { return fetchStock1y; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock3m", function() { return fetchStock3m; });
@@ -2540,10 +2840,10 @@ var fetchAllStocks = function fetchAllStocks() {
     url: 'https://cloud.iexapis.com/stable/ref-data/symbols/?token=pk_fb8f7b4b957c4ca2acee83cb23cd44ac'
   });
 };
-var fetchStock = function fetchStock(symbol) {
+var fetchQuote = function fetchQuote(symbol) {
   return $.ajax({
     method: "GET",
-    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/chart/dynamic/?token=Tpk_9ae29b1583b348919535a4d19affb8dc")
+    url: "https://sandbox.iexapis.com/stable/stock/".concat(symbol, "/quote/dynamic/?token=Tpk_9ae29b1583b348919535a4d19affb8dc")
   });
 };
 var fetchStock5y = function fetchStock5y(symbol) {
@@ -2595,6 +2895,54 @@ var fetchStock1d = function fetchStock1d(symbol) {
 // 5dm	Five Days	Historically adjusted market-wide data in 10 minute intervals
 // date	Specific date	If used with the query parameter chartByDay, then this returns historical OHLCV data for that date. Otherwise, IEX-only data by minute for a specified date if available. Date format YYYYMMDD. Currently supporting trailing 30 calendar days of minute bar data.
 // dynamic	One day	Will return 1d or 1m data depending on the day or week and time of day. Intraday per minute data is only returned during market hours.
+
+/***/ }),
+
+/***/ "./frontend/util/trade_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/trade_api_util.js ***!
+  \*****************************************/
+/*! exports provided: fetchTrades, fetchTrade, createTrade */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTrades", function() { return fetchTrades; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTrade", function() { return fetchTrade; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTrade", function() { return createTrade; });
+var fetchTrades = function fetchTrades() {
+  return $.ajax({
+    method: "GET",
+    url: "api/trades"
+  });
+};
+var fetchTrade = function fetchTrade(id) {
+  return $.ajax({
+    method: "GET",
+    url: "api/trades/".concat(id)
+  });
+};
+var createTrade = function createTrade(trade) {
+  return $.ajax({
+    method: "POST",
+    url: "api/trades",
+    data: {
+      trade: trade
+    }
+  });
+}; // export const deleteTrade = id => (
+//     $.ajax({
+//         method: "DELETE",
+//         url: `api/trades/${id}`
+//     })
+// )
+// export const updateTrade = Trade => (
+//     $.ajax({
+//         method: "PATCH",
+//         url: `api/trades/${Trade.id}`,
+//         data: {Trade}
+//     })
+// )
 
 /***/ }),
 

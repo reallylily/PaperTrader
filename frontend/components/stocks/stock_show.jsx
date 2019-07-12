@@ -1,6 +1,7 @@
 import React from 'react';
 import NavContainer from '../nav/nav_container'
 import Chart from '../chart/chart'
+import TradeContainer from '../trade/trade_form_container'
 
 
 class StockShow extends React.Component {
@@ -52,8 +53,11 @@ class StockShow extends React.Component {
   }
 
   render() {
-
+    // console.log(this.props)
     const symbol = this.props.match.params.symbol
+    let data = Object.values(this.props.stock)
+    // let price = Object.keys(this.props.stock)
+    // let price = this.props
 
     const addToWatchlist = () => ( <button onClick={this.addToWatchlist}>Add to Watchlist</button> )
     const removeFromWatchlist = () => ( <button onClick={this.removeFromWatchlist}>Remove from Watchlist</button> )
@@ -62,10 +66,10 @@ class StockShow extends React.Component {
         <NavContainer history={this.props.history}/>
         <h1 className='company-name'>{this.props.company.companyName}</h1>
 
-        <Chart data={Object.values(this.props.stock)}/>
+        <Chart data={data}/>
         <div className="button-time-period">
           <button onClick={()=>this.props.requestStock1d(symbol)}>1D</button>
-          <button onClick={()=>this.props.requestStock5d(symbol)}>5D</button>
+          <button onClick={()=>this.props.requestStock5d(symbol)}>1W</button>
           <button onClick={()=>this.props.requestStock1m(symbol)}>1M</button>
           <button onClick={()=>this.props.requestStock3m(symbol)}>3M</button>
           <button onClick={()=>this.props.requestStock1y(symbol)}>1Y</button>
@@ -87,7 +91,7 @@ class StockShow extends React.Component {
           </div>
         </div>
         { this.state.watched ? removeFromWatchlist() : addToWatchlist() }
-
+        <TradeContainer symbol={symbol} match={this.props.match}/>
       </div> //stock-show-box
     );
   } //render

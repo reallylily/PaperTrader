@@ -9,7 +9,7 @@
 
 ActiveRecord::Base.transaction do 
     User.destroy_all
-
+    Watchlist.destroy_all
     # Create demo/testing users
     User.create({ username: 'demo_user', password: 'password' })
     User.create({ username: 'test', password: 'password' })

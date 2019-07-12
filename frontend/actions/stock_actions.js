@@ -2,6 +2,7 @@ import * as APIUtil from '../util/stock_api_util';
 
 export const FETCH_ALL_STOCKS = 'FETCH_ALL_STOCKS';
 export const RECEIVE_STOCK = 'RECEIVE_STOCK';
+export const RECEIVE_QUOTE ='RECEIVE_QUOTE'
 
 export const receiveAllStocks = all_stocks => ({
     type: FETCH_ALL_STOCKS,
@@ -12,13 +13,19 @@ export const receiveStock = stock => ({
     type: RECEIVE_STOCK,
     stock
 });
+
+export const receiveQuote = quote => ({
+    type: RECEIVE_QUOTE,
+    quote
+});
+
   
 export const requestAllStocks = () => dispatch => (
     APIUtil.fetchAllStocks().then(all_stocks => dispatch(receiveAllStocks(all_stocks)))
 );
 
-export const requestStock = (symbol) => dispatch => (
-    APIUtil.fetchStock(symbol).then(symbol => dispatch(receiveStock(symbol)))
+export const requestQuote = (symbol) => dispatch => (
+    APIUtil.fetchQuote(symbol).then(symbol => dispatch(receiveQuote(symbol)))
 );
 
 // 5y 1y 3m 1m 7d 1d

@@ -9,10 +9,10 @@ export const fetchAllStocks = () => (
 
 
 
-export const fetchStock = symbol => (
+export const fetchQuote = symbol => (
     $.ajax({
         method: "GET",
-        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/chart/dynamic/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
+        url: `https://sandbox.iexapis.com/stable/stock/${symbol}/quote/dynamic/?token=Tpk_9ae29b1583b348919535a4d19affb8dc`
     })
 )
 

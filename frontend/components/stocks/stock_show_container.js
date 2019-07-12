@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { requestAllStocks, 
-    requestStock, //dynamic api call
+import { 
+    // requestAllStocks, 
+    // requestStock, //quote
     requestStock5y,
     requestStock1y,
     requestStock3m,

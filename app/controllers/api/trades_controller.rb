@@ -1,15 +1,15 @@
 class Api::TradesController < ApplicationController
     
     def index
-        @trades = trade.all
+        @trades = Trade.all
     end
 
     def show
-        @trade = trade.find(params[:id])
+        @trade = Trade.find(params[:id])
     end
 
     def create
-        @trade = trade.new(trade_params)
+        @trade = Trade.new(trade_params)
         if @trade.save
             # render :show
         else

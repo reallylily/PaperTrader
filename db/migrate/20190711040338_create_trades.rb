@@ -4,7 +4,7 @@ class CreateTrades < ActiveRecord::Migration[5.2]
       t.integer :user_id, null: false
       t.string :symbol, null: false
       t.integer :shares, null: false
-      t.integer :price, null: false
+      t.float :price, null: false
       t.string :trade_type, null: false
       t.timestamps
     end

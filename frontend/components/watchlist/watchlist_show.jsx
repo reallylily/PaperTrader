@@ -46,7 +46,7 @@ class WatchlistShow extends React.Component {
 
             <div className="button-time-period">
               <button onClick={()=>this.props.requestWatching1d(symbols)}>1D</button>
-              <button onClick={()=>this.props.requestWatching5d(symbols)}>5D</button>
+              <button onClick={()=>this.props.requestWatching5d(symbols)}>1W</button>
               <button onClick={()=>this.props.requestWatching1m(symbols)}>1M</button>
               <button onClick={()=>this.props.requestWatching3m(symbols)}>3M</button>
               <button onClick={()=>this.props.requestWatching1y(symbols)}>1Y</button>
@@ -71,4 +71,6 @@ class WatchlistShow extends React.Component {
 
 
 export default WatchlistShow;
+
+// let trade = {user_id: 2 , symbol: 'AMZN', shares: 10, price: 100, trade_type: 'buy'}
   

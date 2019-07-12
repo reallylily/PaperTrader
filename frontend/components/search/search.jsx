@@ -25,7 +25,7 @@ class Search extends React.Component {
   handleSubmit(e) {
     // this.state.inoutVal === 'AAPL'
     e.preventDefault();
-    console.log(this)
+    // console.log(this)
     this.props.history.push(`/stocks/${this.state.inputVal}`)
   }
 
@@ -33,7 +33,7 @@ class Search extends React.Component {
     // debugger
     // let symbols = Object.keys(this.props.stocks)
     // console.log(this.props.symbols)
-    console.log(this.props)
+    // console.log(this.props)
     // const matches = this.props.stocks;
     const matches = []
     // if (this.state.inputVal.length === 0) {

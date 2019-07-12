@@ -5,6 +5,7 @@ import all_stocks from './stocks_reducer';
 import stock from './stock_reducer';
 import company from './company_reducer';
 import watching from './watching_reducer'
+import quote from './quote_reducer'
 // import watchlists from './watchlist_reducer'
 
 
@@ -12,6 +13,7 @@ export default combineReducers({
   // users,
   all_stocks,
   stock,
+  quote,
   company,
   watching,
   // watchlists,

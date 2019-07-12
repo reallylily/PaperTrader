@@ -14,6 +14,7 @@
 class User < ApplicationRecord
 
   has_many :watchlists
+  has_many :trades
 
   attr_reader :password
 
