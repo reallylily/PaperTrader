@@ -1,12 +1,19 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import { LineChart, Line, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-
+import CustomTooltip from './custom_tooltip'
 
 const Chart = ({ data }) => {
     data.forEach((stock, idx)=>{ 
-        if(!stock.close) stock.close = data[idx-1].close
-        stock.datetime = stock.date + ' ' + (stock.minute || '') 
+        if(!stock.close) {
+          if (!stock.close && !data[idx-1]) {
+            stock.close = stock.marketClose
+          } else {
+            stock.close = data[idx-1].close
+          }
+        }
+        if (stock.minute) stock.minute =  stock.minute.split(':').join('')
+        stock.datetime = Number(stock.date.split('-').join('') + (stock.minute || ''))
     })
     const close = data.map(stock=>(stock.close))
     let min = -Infinity
@@ -17,6 +24,7 @@ const Chart = ({ data }) => {
         max = close.reduce((acc, el) => (Math.max( acc, el )))
         
     }
+    // debugger
   return (
     <LineChart className='chart'
         width={676}
@@ -29,7 +37,7 @@ const Chart = ({ data }) => {
 
         <Line type="monotone" dataKey="close" dot={false} stroke='#21ce99' yAxisId={0} />
 
-        <Tooltip /> 
+        <Tooltip content={<CustomTooltip />} /> 
      </LineChart>
   );
 };

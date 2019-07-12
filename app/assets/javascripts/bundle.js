@@ -579,15 +579,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! recharts */ "./node_modules/recharts/es6/index.js");
+/* harmony import */ var _custom_tooltip__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./custom_tooltip */ "./frontend/components/chart/custom_tooltip.jsx");
  // import { Link } from 'react-router-dom';
+
 
 
 
 var Chart = function Chart(_ref) {
   var data = _ref.data;
   data.forEach(function (stock, idx) {
-    if (!stock.close) stock.close = data[idx - 1].close;
-    stock.datetime = stock.date + ' ' + (stock.minute || '');
+    if (!stock.close) {
+      if (!stock.close && !data[idx - 1]) {
+        stock.close = stock.marketClose;
+      } else {
+        stock.close = data[idx - 1].close;
+      }
+    }
+
+    if (stock.minute) stock.minute = stock.minute.split(':').join('');
+    stock.datetime = Number(stock.date.split('-').join('') + (stock.minute || ''));
   });
   var close = data.map(function (stock) {
     return stock.close;
@@ -602,7 +612,8 @@ var Chart = function Chart(_ref) {
     max = close.reduce(function (acc, el) {
       return Math.max(acc, el);
     });
-  }
+  } // debugger
+
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
     className: "chart",
@@ -628,10 +639,61 @@ var Chart = function Chart(_ref) {
     dot: false,
     stroke: "#21ce99",
     yAxisId: 0
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], null));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+    content: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_custom_tooltip__WEBPACK_IMPORTED_MODULE_2__["default"], null)
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Chart);
+
+/***/ }),
+
+/***/ "./frontend/components/chart/custom_tooltip.jsx":
+/*!******************************************************!*\
+  !*** ./frontend/components/chart/custom_tooltip.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+ // import { Link } from 'react-router-dom';
+// import { LineChart, Line, ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+// import CustomToolTip from './custom_tooltip'
+// function getIntroOfPage(label) {
+//   if (label === 'Page A') {
+//     return 'Page A is about men's clothing';
+//   } if (label === 'Page B') {
+//     return 'Page B is about women's dress';
+//   } if (label === 'Page C') {
+//     return 'Page C is about women's bag';
+//   } if (label === 'Page D') {
+//     return 'Page D is about household goods';
+//   } if (label === 'Page E') {
+//     return 'Page E is about food';
+//   } if (label === 'Page F') {
+//     return 'Page F is about baby food';
+//   }
+// }
+
+var CustomTooltip = function CustomTooltip(_ref) {
+  var payload = _ref.payload,
+      label = _ref.label,
+      active = _ref.active;
+  console.log(payload);
+
+  if (active) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "custom-tooltip"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, payload[0].payload.date), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, payload[0].payload.label), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "$", Number.parseFloat(payload[0].payload.close).toFixed(2)));
+  }
+
+  return null;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (CustomTooltip);
 
 /***/ }),
 
@@ -1049,7 +1111,7 @@ function (_React$Component) {
         }, result);
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "auto"
+        className: "search"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -1446,12 +1508,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var StockIndexItem = function StockIndexItem(_ref) {
-  var stock = _ref.stock;
+  var symbol = _ref.symbol,
+      shares = _ref.shares,
+      watching = _ref.watching;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-    to: "/stocks/".concat(stock.symbol)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "stock-index-item"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, stock.symbol))));
+    to: "/stocks/".concat(symbol)
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "watchlist-index-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, shares, " Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "watchlist-index-item-price"
+  }, "$", watching ? watching.quote.latestPrice : null))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (StockIndexItem);
@@ -1973,7 +2039,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nav_nav_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../nav/nav_container */ "./frontend/components/nav/nav_container.js");
 /* harmony import */ var _watchlist_index_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./watchlist_index_item */ "./frontend/components/watchlist/watchlist_index_item.jsx");
-/* harmony import */ var _chart_chart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../chart/chart */ "./frontend/components/chart/chart.jsx");
+/* harmony import */ var _stocks_stock_index_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stocks/stock_index_item */ "./frontend/components/stocks/stock_index_item.jsx");
+/* harmony import */ var _chart_chart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../chart/chart */ "./frontend/components/chart/chart.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1999,6 +2066,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var WatchlistShow =
 /*#__PURE__*/
 function (_React$Component) {
@@ -2013,18 +2081,26 @@ function (_React$Component) {
   _createClass(WatchlistShow, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var symbols = Object.values(this.props.watchlists).map(function (watchlist) {
-        return watchlist.symbol;
-      }).join(',');
-      this.props.requestWatching1d(symbols);
+      var symbols = Object.keys(this.props.currentUser.portfolio).join(',');
+      this.props.requestWatching1d(symbols); // const watch_symbols = Object.values(this.props.watchlists).map(watchlist => (watchlist.symbol)).join(',')
+      // this.props.requestWatching1d(watch_symbols);
     }
   }, {
     key: "render",
     value: function render() {
       var _this = this;
 
-      // For Watchlist Index
-      var symbolsIDX = Object.values(this.props.currentUser.watchlists).map(function (watchlist) {
+      // For Stock Index
+      var stock_index = Object.keys(this.props.currentUser.portfolio).map(function (symbol) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stocks_stock_index_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          symbol: symbol,
+          key: symbol,
+          shares: _this.props.currentUser.portfolio[symbol],
+          watching: _this.props.watching[symbol]
+        });
+      }); // For Watchlist Index
+
+      var watchlist_index = Object.values(this.props.currentUser.watchlists).map(function (watchlist) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_index_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
           watchlist: watchlist,
           key: watchlist.symbol,
@@ -2033,17 +2109,19 @@ function (_React$Component) {
       }); // For Watchlist Chart
 
       var data = [];
-      var symbols = Object.values(this.props.watchlists).map(function (watchlist) {
-        return watchlist.symbol;
-      }).join(',');
+      var symbols = Object.keys(this.props.currentUser.portfolio).join(',');
       Object.values(this.props.watching).forEach(function (watch) {
+        console.log(watch);
         watch.chart.forEach(function (dot, i) {
           if (!data[i]) data[i] = {};
           if (!data[i].date) data[i].date = dot.date;
           if (!data[i].minute) data[i].minute = dot.minute;
+          if (!data[i].label) data[i].label = dot.label;
           if (!dot.close) dot.close = watch.chart[i - 1].close;
-          if (!data[i].close) data[i].close = dot.close;
-          data[i].close += dot.close;
+          if (!data[i].close) data[i].close = dot.close; // console.log(this.props.currentUser.portfolio[watch.quote.symbol])
+          // console.log(watch.quote.symbol)
+
+          data[i].close += dot.close * _this.props.currentUser.portfolio[watch.quote.symbol];
         });
       });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2052,7 +2130,7 @@ function (_React$Component) {
         className: "stock-show-box"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "company-name"
-      }, "Portfolio"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_chart_chart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, "$", data[data.length - 1] ? Number.parseFloat(data[data.length - 1].close).toFixed(2) : null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_chart_chart__WEBPACK_IMPORTED_MODULE_4__["default"], {
         data: data
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "button-time-period"
@@ -2082,7 +2160,7 @@ function (_React$Component) {
         }
       }, "5Y"))), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlist-index-box"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, symbolsIDX)), " "), " ");
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, stock_index), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "WatchList"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, watchlist_index)), " "), " ");
     } // render
 
   }]);

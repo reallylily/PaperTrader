@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const StockIndexItem = ({ stock }) => {
+const StockIndexItem = ({ symbol, shares, watching }) => {
   return (
-    <Link to={`/stocks/${stock.symbol}`}>
-      <li className='stock-index-item'>
-        <div>
-          <h5>{stock.symbol}</h5>
+    <Link to={`/stocks/${symbol}`}>
+      <li>
+        <div className='watchlist-index-item'>
+          <p>{symbol}</p>
+          <p>{shares} Shares</p>
+          <p className='watchlist-index-item-price'>${(watching) ?  (watching.quote.latestPrice): null}</p>
         </div>
       </li>
     </Link>

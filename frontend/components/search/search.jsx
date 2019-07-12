@@ -77,7 +77,7 @@ class Search extends React.Component {
     return(
       <div>
         {/* <h1>Autocomplete</h1> */}
-        <div className='auto'>
+        <div className='search'>
           <form onSubmit={this.handleSubmit}>
             <input
               onChange={this.handleInput}

@@ -9,8 +9,12 @@ header {
     color: #040d14;
     background: white;
     /* border: 1px solid red; */
-    /* float: left; */
-    
+    // float: left;
+
+}
+
+.search {
+    margin-top: 9px;
 }
 
 
@@ -18,12 +22,11 @@ header {
 .header-link {
     text-decoration: none;
     color: #040d14;
-    /* float: left; */
 }
 
 
 .header-image {
-    margin-left: 10%;
+    margin-left: 5%;
     margin-top: 14px;
     float: left;
     height: 43px;
@@ -33,6 +36,7 @@ header {
 .header-text {
     margin-top: 23px;
     margin-left: 4px;
+    margin-right: 50px;
     font-size: 20px;
     text-decoration: none;
     color: #040d14;
