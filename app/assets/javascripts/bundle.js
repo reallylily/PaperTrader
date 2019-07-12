@@ -682,7 +682,6 @@ var CustomTooltip = function CustomTooltip(_ref) {
   var payload = _ref.payload,
       label = _ref.label,
       active = _ref.active;
-  console.log(payload);
 
   if (active) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -751,9 +750,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var history = this.props.history;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "nav-box"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_nav_nav_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         history: history
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_show_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_watchlist_watchlist_show_container__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     } // render
 
   }]);
@@ -1057,8 +1058,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       // this.state.inoutVal === 'AAPL'
-      e.preventDefault(); // console.log(this)
-
+      e.preventDefault();
       this.props.history.push("/stocks/".concat(this.state.inputVal));
     }
   }, {
@@ -1068,8 +1068,6 @@ function (_React$Component) {
 
       // debugger
       // let symbols = Object.keys(this.props.stocks)
-      // console.log(this.props.symbols)
-      // console.log(this.props)
       // const matches = this.props.stocks;
       var matches = []; // if (this.state.inputVal.length === 0) {
       //   return this.props.symbols;
@@ -1585,8 +1583,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var symbol = this.props.match.params.symbol;
       this.props.requestStock1d(symbol);
-      this.props.requestCompany(symbol); // console.log(this.props)
-
+      this.props.requestCompany(symbol);
       this.setState({
         watched: Boolean(this.props.watchlists[symbol])
       }); // this.stockInWatchlist = !!this.props.watchlists[symbol]
@@ -1639,10 +1636,10 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      // console.log(this.props)
       var symbol = this.props.match.params.symbol;
       var data = Object.values(this.props.stock); // let price = Object.keys(this.props.stock)
       // let price = this.props
+      // debugger
 
       var addToWatchlist = function addToWatchlist() {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -1864,13 +1861,9 @@ function (_React$Component) {
       var _this2 = this;
 
       this.props.requestQuote(this.props.symbol).then(function (quote) {
-        console.log(quote.quote.close);
-
         _this2.setState({
           price: quote.quote.close
         });
-
-        console.log(_this2.state);
       });
     }
   }, {
@@ -2111,16 +2104,13 @@ function (_React$Component) {
       var data = [];
       var symbols = Object.keys(this.props.currentUser.portfolio).join(',');
       Object.values(this.props.watching).forEach(function (watch) {
-        console.log(watch);
         watch.chart.forEach(function (dot, i) {
           if (!data[i]) data[i] = {};
           if (!data[i].date) data[i].date = dot.date;
           if (!data[i].minute) data[i].minute = dot.minute;
           if (!data[i].label) data[i].label = dot.label;
           if (!dot.close) dot.close = watch.chart[i - 1].close;
-          if (!data[i].close) data[i].close = dot.close; // console.log(this.props.currentUser.portfolio[watch.quote.symbol])
-          // console.log(watch.quote.symbol)
-
+          if (!data[i].close) data[i].close = dot.close;
           data[i].close += dot.close * _this.props.currentUser.portfolio[watch.quote.symbol];
         });
       });
@@ -2203,7 +2193,6 @@ var msp = function msp(state, ownProps) {
   // state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
   //     watchlists[watchlist.symbol] = watchlist
   // })
-  // console.log(state)
   return {
     // stock: state.entities.stock, 
     // stocks: stocks, 

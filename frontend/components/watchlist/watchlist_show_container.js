@@ -24,7 +24,6 @@ const msp = (state, ownProps) => {
     // state.entities.users[state.session.id].watchlists.forEach(watchlist =>{
     //     watchlists[watchlist.symbol] = watchlist
     // })
-    // console.log(state)
     return ({
         // stock: state.entities.stock, 
         // stocks: stocks, 

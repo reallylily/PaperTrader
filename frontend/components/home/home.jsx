@@ -11,7 +11,9 @@ class Home extends React.Component {
   
     return (
       <div>
-        <NavContainer history={history} />
+        <div className='nav-box'>
+          <NavContainer history={history} />
+        </div>
         <WatchlistShowContainer />
       </div>
     )

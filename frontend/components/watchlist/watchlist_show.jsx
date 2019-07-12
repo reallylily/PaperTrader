@@ -32,7 +32,6 @@ class WatchlistShow extends React.Component {
 
 
     Object.values(this.props.watching).forEach(watch =>{
-      console.log(watch)
       watch.chart.forEach((dot, i)=>{
         if (!data[i]) data[i] = {};
         if (!data[i].date) data[i].date = dot.date;
@@ -40,8 +39,6 @@ class WatchlistShow extends React.Component {
         if (!data[i].label) data[i].label = dot.label;
         if (!dot.close) dot.close = watch.chart[i-1].close;
         if (!data[i].close) data[i].close = dot.close;
-        // console.log(this.props.currentUser.portfolio[watch.quote.symbol])
-        // console.log(watch.quote.symbol)
         data[i].close += dot.close * this.props.currentUser.portfolio[watch.quote.symbol]
       })
     })

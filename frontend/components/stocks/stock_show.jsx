@@ -17,7 +17,6 @@ class StockShow extends React.Component {
     const symbol = this.props.match.params.symbol;
     this.props.requestStock1d(symbol);
     this.props.requestCompany(symbol);
-    // console.log(this.props)
     this.setState({watched: Boolean(this.props.watchlists[symbol])})
     // this.stockInWatchlist = !!this.props.watchlists[symbol]
   }
@@ -53,11 +52,11 @@ class StockShow extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
     const symbol = this.props.match.params.symbol
     let data = Object.values(this.props.stock)
     // let price = Object.keys(this.props.stock)
     // let price = this.props
+    // debugger
 
     const addToWatchlist = () => ( <button onClick={this.addToWatchlist}>Add to Watchlist</button> )
     const removeFromWatchlist = () => ( <button onClick={this.removeFromWatchlist}>Remove from Watchlist</button> )

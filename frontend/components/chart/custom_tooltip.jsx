@@ -21,11 +21,9 @@ import React from 'react';
 // }
 
 const CustomTooltip = ({ payload, label, active }) => {
-  console.log(payload)
   if (active) {
     return (
       <div className="custom-tooltip">
-        {/* <p>{console.log(label)}</p> */}
         {/* <p>{payload[0].payload.datetime}</p> */}
 
         <p>{payload[0].payload.date}</p>

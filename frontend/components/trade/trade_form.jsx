@@ -19,9 +19,7 @@ class TradeForm extends React.Component {
       
   componentDidMount() {
     this.props.requestQuote(this.props.symbol).then(quote =>{
-      console.log(quote.quote.close)
       this.setState({ price: quote.quote.close })
-      console.log(this.state)
     })
   }
   
